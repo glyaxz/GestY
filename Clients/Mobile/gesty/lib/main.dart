@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  var db = new ConnectionSettings(
+    host: "localhost",
+    port:3306,
+    user: "gesty",
+    
+  )
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -24,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'GestY'),
     );
   }
 }
