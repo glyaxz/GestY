@@ -10,7 +10,9 @@ GestY reune la mayoria de herramientas necesarias para la gestion de proyectos, 
 GestY cuenta con las siguientes posibilidades:
 * Fichajes de entrada y salida
 * Gestión de Proyectos
-* Gestión de tareas
+* Gestión de tareas@
 * Videoconferencias grupales
 * Mensajeria instantanea 
+
+[*Aplicacion en desarrrollo*](https://trello.com/b/L432pNQ3/gesty)
 
