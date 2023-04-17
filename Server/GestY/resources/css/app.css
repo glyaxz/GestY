@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------Table---------------- */
+.table{
+    @apply table-auto w-full
+}
+.table th{
+    @apply px-6 py-4 bg-orange-100 font-medium text-gray-500 uppercase border leading-4 tracking-wide
+}
+
+.table tr{
+    @apply border
+}
+.table td{
+    @apply px-6 py-4 bg-gray-50 whitespace-normal text-center border
+}
+.table .fichajes td{
+    @apply font-extralight text-sm
+}
+/* ----------------Table---------------- */
+/* ----------------Cards---------------- */
+.card{
+    @apply p-6 rounded shadow-sm mt-4 max-w-screen-2xl min-w-max
+}
+.card-white{
+    @apply bg-white mb-4 w-auto
+}
+/* ----------------Cards---------------- */
+/* ----------------Buttons---------------- */
+
+.btn{
+    @apply border rounded px-3 py-2 text-white font-bold inline-block transition-all
+}
+.btn-pdf{
+    width: 100;
+    @apply bg-orange-400 hover:bg-orange-300 border-t-orange-400 text-center mx-2
+}
+.btn-company{
+    @apply bg-rose-300 hover:bg-rose-200 border-t-rose-400 text-center mx-2 w-32
+}
+.btn-hidden{
+    @apply  m-auto hover:bg-gray-100
+}
+.btn-fichar {
+    @apply border-orange-300 text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2 lg:px-3 py-2 lg:py-2.5 dark:hover:bg-orange-300 focus:outline-none dark:focus:ring-orange-400
+}
+.btn-client{
+    @apply border-orange-300 bg-orange-400 text-center w-44 h-16 dark:hover:bg-orange-300 focus:outline-none dark:focus:ring-orange-400
+
+}
+
+
+/* ----------------Clickup---------------- */
+.comp-create{
+    @apply container table-auto
+}
+.comp-create th{
+    @apply px-6 py-4 bg-orange-100 font-medium text-gray-500 uppercase border leading-4 tracking-wide
+}
+
+.comp-create tr{
+    @apply border
+}
+.comp-create td{
+    @apply px-6 py-4 bg-gray-50 whitespace-normal text-center border
+}
+/* ----------------Clickup---------------- */
+/* ----------------Clickup---------------- */
+.c-buttons{
+    @apply flex justify-center items-center
+}
+.c-client{
+    @apply text-center text-2xl shadow-sm font-extrabold py-4
+}
+.c-hours{
+    @apply text-center font-bold py-4
+}
+.c-taskInfo{
+    @apply  px-20 py-3 text-center
+}
+.c-task{
+    @apply text-center text-2xl shadow-sm font-extrabold py-4
+}
+.ct-d{
+    @apply font-bold text-lg text-center underline
+}
+.cs{
+    @apply px-20 py-3 text-center
+}
+.cs-title{
+    @apply text-center underline text-lg font-bold
+}
+.cs-name{
+    @apply underline font-semibold
+}
+.cs-assigned{
+    @apply px-12 pb-10
+}
+
+/* ----------------Clickup---------------- */
+.view-btns{
+    @apply flex justify-center pt-4
+}
