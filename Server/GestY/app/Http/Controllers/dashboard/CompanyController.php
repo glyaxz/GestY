@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\company\StoreRequest;
-use App\Models\Company;
 use App\Models\User;
-use FontLib\Table\Type\name;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Company;
 use Nette\Utils\Random;
+use App\Models\Empleado;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\company\StoreRequest;
 
 class CompanyController extends Controller
 {
     public function index(User $user)
     {
+
         if(Auth::user()->isAdmin()){
             $empresas = Company::all();
             return view('dashboard.companies.index', compact('empresas'));
         }else{
-            $empleado = $user->empleado();
-            $empresas = Company::query()->get()->where('company_id', Auth::user()->empleado()->company_id);
+            $empleado = Empleado::query()->get()->where('id', Auth::user()->empleado_id)->first();
+            $empresas = Company::query()->get()->where('id', $empleado->company_id)->first();
             return view('dashboard.companies.index', compact('empresas'));
         }
     }
@@ -48,7 +49,7 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-        //
+        return view('dashboard.companies.show', compact('company'));
     }
 
     public function edit(Company $company)

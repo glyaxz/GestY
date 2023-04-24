@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\ClickupController;
 use App\Http\Controllers\api\EmpleadosController;
 use App\Http\Controllers\api\FichajesController;
+use App\Http\Controllers\api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('apifichajes', FichajesController::class);
-Route::resource('apiempleados', EmpleadosController::class);
-Route::resource('apiclickup', ClickupController::class);
-Route::get('fichajes/getall', [FichajesController::class, 'getall']);
+Route::middleware('client')->group( function() {
+    Route::post('login-user', [LoginController::class, 'loginUser']);
+    Route::post('register-user', [LoginController::class, 'registerUser']);
+    Route::resource('empleados', EmpleadosController::class);
+});

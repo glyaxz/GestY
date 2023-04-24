@@ -33,12 +33,18 @@
 .btn{
     @apply border rounded px-3 py-2 text-white font-bold inline-block transition-all
 }
+.btn-action{
+    @apply border rounded px-3 py-2 w-44 text-white font-bold inline-block transition-all
+}
 .btn-pdf{
     width: 100;
     @apply bg-orange-400 hover:bg-orange-300 border-t-orange-400 text-center mx-2
 }
 .btn-company{
     @apply bg-rose-300 hover:bg-rose-200 border-t-rose-400 text-center mx-2 w-32
+}
+.btn-view{
+    @apply bg-rose-300 hover:bg-rose-200 border-t-rose-400 text-center mx-2
 }
 .btn-hidden{
     @apply  m-auto hover:bg-gray-100
@@ -52,7 +58,7 @@
 }
 
 
-/* ----------------Clickup---------------- */
+/* ----------------Company---------------- */
 .comp-create{
     @apply container table-auto
 }
@@ -66,10 +72,13 @@
 .comp-create td{
     @apply px-6 py-4 bg-gray-50 whitespace-normal text-center border
 }
-/* ----------------Clickup---------------- */
+/* ----------------Company---------------- */
 /* ----------------Clickup---------------- */
 .c-buttons{
-    @apply flex justify-center items-center
+    @apply grid justify-self-center grid-cols-5 gap-4
+}
+.c-button{
+    @apply flex justify-center
 }
 .c-client{
     @apply text-center text-2xl shadow-sm font-extrabold py-4
