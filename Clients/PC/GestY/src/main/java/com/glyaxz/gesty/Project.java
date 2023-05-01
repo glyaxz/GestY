@@ -9,5 +9,32 @@ package com.glyaxz.gesty;
  * @author Javier Garcia
  */
 public class Project {
-    
+    private String name;
+    private int id;
+    private Company company;
+
+    public Project(String name, int id, Company company){
+        this.name = name;
+        this.id = id;
+        this.company = company;
+    }
+
+    public void setName(String name){
+        this.name = name;        
+    }
+    public String getName(){
+        return this.name;        
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return this.id;
+    }
+    public void setCompany(Company company){
+        this.company = company;
+    }
+    public Company getCompany(){
+        return this.company;
+    }
 }
