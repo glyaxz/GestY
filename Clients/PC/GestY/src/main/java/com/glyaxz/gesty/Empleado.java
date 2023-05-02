@@ -15,8 +15,15 @@ public class Empleado extends User{
     GestyConnector gc;
     private String companyRef;
 
+    public Empleado(String email, String sessionId, String companyRef) {
+        super(email, sessionId);
+        this.companyRef = companyRef;
+        gc = new GestyConnector();
+    }
+
     public Empleado(String email, String sessionId) {
         super(email, sessionId);
+        this.companyRef = null;
         gc = new GestyConnector();
     }
     

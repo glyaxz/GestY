@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -18,6 +19,10 @@ import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  *
@@ -33,7 +38,6 @@ public class GestyConnector {
     Empleado logged = null;
 
     public Empleado login(String email, String password) {
-        boolean isValid = false;
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
@@ -55,11 +59,18 @@ public class GestyConnector {
                         result = EntityUtils.toString(entity);
                         String formatted = result.replace("\"","");
                         sessionId = formatted.substring(formatted.indexOf("|") + 1);
-                        logged = new Empleado(email, sessionId);
+                        if(!sessionId.contains("<!DOCTYPE html>")){
+                            logged = new Empleado(email, sessionId);
+                            return logged;
+                        }else{
+                            return null;
+                        } 
                     } catch (ParseException e) {
                         e.printStackTrace();
-                        isValid = false;
+                        return null;
                     }
+                }else{
+                    return null;
                 }
             } finally {
                 httpClient.close();
@@ -69,7 +80,6 @@ public class GestyConnector {
             ex.printStackTrace();
             return null;
         }
-        return logged;
     }
 
     public Empleado getUserLogged(){
@@ -117,5 +127,88 @@ public class GestyConnector {
             }
             return isValid;
         }
+    }
+
+    public boolean hasRef(Empleado empleado){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost("http://localhost:8000/api/check-user-ref");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("email", empleado.getEmail()));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    
+                    if(!result.equals("")){
+                        Gson gson = new Gson();
+                        JsonObject obj = gson.fromJson(result, JsonObject.class);
+                        int setted = obj.get("company_id").getAsInt();
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            } finally {
+                httpClient.close();
+                response.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return false;
+        }
+    }
+
+    public boolean setUserRef(Empleado logged, String ref){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPut request = new HttpPut("http://localhost:8000/api/set-user-ref");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("company_ref", ref));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    if(!result.equals("")){
+                        httpClient.close();
+                        response.close();
+                        return true;
+                    }else{
+                        httpClient.close();
+                        response.close();
+                        return false;
+                    }
+                }
+            }catch(ParseException e){
+                e.printStackTrace();
+                httpClient.close();
+                response.close();
+                return false;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return false;
     }
 }

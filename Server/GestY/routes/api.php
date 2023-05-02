@@ -27,5 +27,7 @@ Route::middleware('client')->group( function() {
     Route::post('login-user', [LoginController::class, 'loginUser']);
     Route::post('register-user', [LoginController::class, 'registerUser']);
     Route::post('check-ref', [ClientController::class, 'checkRef']);
+    Route::post('check-user-ref', [ClientController::class, 'checkUserRef']);
+    Route::put('set-user-ref', [ClientController::class, 'setUserRef']);
     Route::resource('empleados', EmpleadosController::class);
 });

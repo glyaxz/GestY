@@ -4,21 +4,26 @@
  */
 package com.glyaxz.gesty;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.IOException;
 /**
  *
  * @author bokax
  */
 public class Main extends javax.swing.JFrame {
 
+    //Variables
+    GestyConnector gc;
+    App app;
+    Empleado logged = null;
+    
+    //App
+    
     /**
      * Creates new form Main
      */
     public Main() {
+        gc = new GestyConnector();
         initComponents();
+        txtError.setText("");
         setLocationRelativeTo(null);
     }
 
@@ -31,47 +36,96 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        txtEmail = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
+        txtError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(400, 300));
         setResizable(false);
+        getContentPane().setLayout(null);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
+        getContentPane().add(txtEmail);
+        txtEmail.setBounds(150, 120, 180, 26);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(366, Short.MAX_VALUE)
-                .add(jButton1)
-                .add(359, 359, 359))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(267, 267, 267)
-                .add(jButton1)
-                .addContainerGap(310, Short.MAX_VALUE))
-        );
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Correo");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(60, 120, 73, 16);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Contraseña");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(60, 160, 73, 20);
+
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Bienvenido a Gesty");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(80, 40, 230, 30);
+
+        btnLogin.setText("Iniciar sesion");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLogin);
+        btnLogin.setBounds(140, 210, 110, 27);
+
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtPass);
+        txtPass.setBounds(150, 160, 180, 26);
+
+        txtError.setForeground(new java.awt.Color(255, 102, 102));
+        txtError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(txtError);
+        txtError.setBounds(90, 80, 220, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Thread t = new Thread( () -> {
-            GestyConnector gc = new GestyConnector();
-            Empleado userLogged = gc.login("admin@admin.com", "admin123");
-            userLogged.setCompanyRef("f32d2a");
-        });
-        t.run();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try{
+            String email = txtEmail.getText();
+            String pass = txtPass.getText();
+
+            logged = gc.login(email, pass);
+            if(logged != null){
+                app = new App(logged, gc);
+                this.setVisible(false);
+                app.setVisible(true);
+            }else{
+                txtError.setText("Las credenciales no son correctas.");
+                txtError.setVisible(true);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            txtError.setText("Ha habido un problema con la aplicación.");
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,13 +158,26 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JLabel txtError;
+    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 
-    
+    //Getters and Setters
+    public GestyConnector getConnector(){
+        return this.gc;
+    }
+    public void setConnector(GestyConnector gc){
+        this.gc = gc;
+    }
 }
