@@ -67,8 +67,8 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Thread t = new Thread( () -> {
             GestyConnector gc = new GestyConnector();
-            boolean output = gc.login("admin@admin.com", "admin123");
-            User userLogged = output ? gc.getUserLogged() : null;
+            Empleado userLogged = gc.login("admin@admin.com", "admin123");
+            userLogged.setCompanyRef("f32d2a");
         });
         t.run();
     }//GEN-LAST:event_jButton1ActionPerformed

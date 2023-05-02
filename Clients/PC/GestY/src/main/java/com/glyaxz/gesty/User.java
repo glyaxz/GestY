@@ -11,7 +11,6 @@ package com.glyaxz.gesty;
 public class User {
     //Variables
     private String email, sessionId;
-    private Empleado empleado;
 
     public User(String email, String sessionId){
         this.email = email;
@@ -31,10 +30,5 @@ public class User {
     public void setSessionId(String sessionId){
         this.sessionId = sessionId;
     }
-    public Empleado getEmpleado(){
-        return this.empleado;
-    }
-    public void setEmpleado(Empleado emp){
-        this.empleado = emp;
-    }
+
 }

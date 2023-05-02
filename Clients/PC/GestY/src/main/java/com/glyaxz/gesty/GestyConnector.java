@@ -15,6 +15,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 
@@ -29,9 +30,9 @@ public class GestyConnector {
      */
     private final String token = "3sJak0orV9ysH0GBV2PZBDPqiIBroEZI";
     private String sessionId = "";
-    User logged = null;
+    Empleado logged = null;
 
-    public boolean login(String email, String password) {
+    public Empleado login(String email, String password) {
         boolean isValid = false;
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -46,15 +47,61 @@ public class GestyConnector {
             request.setEntity(new UrlEncodedFormEntity(params));
 
             CloseableHttpResponse response = httpClient.execute(request);
-            System.out.println(response.getEntity());
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result;
+                    try {
+                        result = EntityUtils.toString(entity);
+                        String formatted = result.replace("\"","");
+                        sessionId = formatted.substring(formatted.indexOf("|") + 1);
+                        logged = new Empleado(email, sessionId);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        isValid = false;
+                    }
+                }
+            } finally {
+                httpClient.close();
+                response.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return logged;
+    }
+
+    public Empleado getUserLogged(){
+        return logged;
+    }
+
+    public String checkRef(String companyRef, String sessionId) {
+        String isValid = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost("http://localhost:8000/api/check-ref");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+            request.setHeader("gesty_session", sessionId);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("companyRef", companyRef));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     String result = EntityUtils.toString(entity);
                     String formatted = result.replace("\"","");
-                    sessionId = formatted.substring(formatted.indexOf("|") + 1);
-                    logged = new User(email, sessionId);
-                    isValid = true;
+                    if(!formatted.equals("")){
+                        String company = formatted.substring(formatted.indexOf("|") + 1);
+                        isValid = company;
+                    }else{
+                        isValid = null;
+                    }
                 }
             } finally {
                 httpClient.close();
@@ -70,9 +117,5 @@ public class GestyConnector {
             }
             return isValid;
         }
-    }
-
-    public User getUserLogged(){
-        return logged;
     }
 }

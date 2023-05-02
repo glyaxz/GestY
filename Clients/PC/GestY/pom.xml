@@ -31,6 +31,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
-          </dependency>
+        </dependency>
+                <!-- https://mvnrepository.com/artifact/org.jdesktop/swing-layout -->
+        <dependency>
+            <groupId>org.jdesktop</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
 </project>
