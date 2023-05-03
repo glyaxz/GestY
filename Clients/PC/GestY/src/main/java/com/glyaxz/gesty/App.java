@@ -72,11 +72,12 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(200, 200));
         setResizable(false);
 
         jpApp.setMinimumSize(new java.awt.Dimension(800, 600));
         jpApp.setLayout(null);
+
+        ico.setMinimumSize(new java.awt.Dimension(800, 600));
         jpApp.add(ico);
         ico.setBounds(6, 6, 102, 85);
 
@@ -186,7 +187,7 @@ public class App extends javax.swing.JFrame {
         this.gc = gc;
     }
     public void checkRef(){
-        if(app.gc.hasRef(app.logged)){
+        if(gc.hasRef(this.logged)){
             System.out.println("tiene ref");
             app.jpApp.setVisible(true);
             app.jpRef.setVisible(false);

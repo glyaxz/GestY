@@ -6,6 +6,8 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -23,7 +25,14 @@ class ClientController extends Controller
 
     public function setUserRef(Request $request){
         $ref = $request->get('company_ref');
-        $company = Company::query()->get()->where('company_ref', $ref)->first();
+        Log::channel('daily')->info($ref);
+        $logged = $request->get('email');
+        Log::channel('daily')->info($logged);
+        $company = Company::query()->get()->where('company_ref', $ref)->first()->getModel();
+        Log::channel('daily')->info($company);
+        $user = Empleado::query()->get()->where('correo', $logged)->first()->getModel();
+        Log::channel('daily')->info($user);
+        $user->update(['company_id' => $company->id]);
         return $company ?? null;
     }
 }

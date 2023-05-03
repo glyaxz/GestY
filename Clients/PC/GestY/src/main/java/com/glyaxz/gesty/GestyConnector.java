@@ -6,6 +6,9 @@ package com.glyaxz.gesty;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.xml.transform.Source;
+
 import java.util.ArrayList;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
@@ -145,29 +148,32 @@ public class GestyConnector {
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    String result = EntityUtils.toString(entity);
-                    
-                    if(!result.equals("")){
-                        Gson gson = new Gson();
-                        JsonObject obj = gson.fromJson(result, JsonObject.class);
-                        int setted = obj.get("company_id").getAsInt();
-                        return true;
-                    }else{
+                    try{
+                        String result = EntityUtils.toString(entity);
+                        
+                        if(!result.equals("")){
+                            Gson gson = new Gson();
+                            JsonObject obj = gson.fromJson(result, JsonObject.class);
+                            int setted = obj.get("company_id").getAsInt();
+                            System.out.println(setted);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }catch(ParseException e){
+                        e.printStackTrace();
                         return false;
                     }
                 }
-            } finally {
                 httpClient.close();
                 response.close();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                httpClient.close();
-            } catch (IOException ex) {
+                return false;
+            }catch (IOException ex) {
                 ex.printStackTrace();
-            }
+                return false;
+           }
+        }catch(Exception e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -182,6 +188,7 @@ public class GestyConnector {
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("company_ref", ref));
+            params.add(new BasicNameValuePair("email", logged.getEmail()));
             request.setEntity(new UrlEncodedFormEntity(params));
 
             CloseableHttpResponse response = httpClient.execute(request);
