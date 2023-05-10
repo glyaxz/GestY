@@ -7,8 +7,6 @@ package com.glyaxz.gesty;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.transform.Source;
-
 import java.util.ArrayList;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
@@ -24,7 +22,6 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -44,7 +41,7 @@ public class GestyConnector {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost request = new HttpPost("http://localhost:8000/api/login-user");
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/login-user");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
 
@@ -94,7 +91,7 @@ public class GestyConnector {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost request = new HttpPost("http://localhost:8000/api/check-ref");
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/check-ref");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
             request.setHeader("gesty_session", sessionId);
@@ -136,7 +133,7 @@ public class GestyConnector {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost request = new HttpPost("http://localhost:8000/api/check-user-ref");
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/check-user-ref");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
 
@@ -182,7 +179,7 @@ public class GestyConnector {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPut request = new HttpPut("http://localhost:8000/api/set-user-ref");
+            HttpPut request = new HttpPut("https://gesty.devf6.es/api/set-user-ref");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
 
