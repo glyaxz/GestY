@@ -1,6 +1,5 @@
 /node_modules
 /app/Http/Middleware/HandleInertiaRequests.php
-/resources/js/
 /public/build
 /public/hot
 /public/storage
