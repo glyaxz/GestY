@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Models\Company;
-use App\Models\ClickupList;
+use App\Models\CList;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ClickupProject extends Model
+class CProject extends Model
 {
     protected $fillable = ['project_id', 'project_name', 'company_id'];
     use HasFactory;
@@ -17,6 +17,6 @@ class ClickupProject extends Model
     }
 
     public function lists(){
-        return $this->hasMany(ClickupList::class);
+        return $this->hasMany(CList::class);
     }
 }

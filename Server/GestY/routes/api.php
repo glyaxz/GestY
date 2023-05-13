@@ -4,9 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\ClientController;
-use App\Http\Controllers\api\ClickupController;
-use App\Http\Controllers\api\FichajesController;
-use App\Http\Controllers\api\EmpleadosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +26,7 @@ Route::middleware('client')->group( function() {
     Route::post('check-ref', [ClientController::class, 'checkRef']);
     Route::post('check-user-ref', [ClientController::class, 'checkUserRef']);
     Route::put('set-user-ref', [ClientController::class, 'setUserRef']);
-    Route::resource('empleados', EmpleadosController::class);
+    Route::post('get-companies', [ClientController::class, 'getCompanies']);
+    Route::post('get-projects', [ClientController::class, 'getProjects']);
+    Route::post('get-tasks', [ClientController::class, 'getTasks']);
 });

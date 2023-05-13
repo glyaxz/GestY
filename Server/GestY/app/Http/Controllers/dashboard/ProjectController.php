@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\ClickupProject;
+use App\Models\CProject;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -42,10 +43,10 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ClickupProject  $clickupProject
+     * @param  \App\Models\CProject  $CProject
      * @return \Illuminate\Http\Response
      */
-    public function show(ClickupProject $clickupProject)
+    public function show(CProject $CProject)
     {
         //
     }
@@ -53,10 +54,10 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ClickupProject  $clickupProject
+     * @param  \App\Models\CProject  $CProject
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClickupProject $clickupProject)
+    public function edit(CProject $CProject)
     {
         //
     }
@@ -65,10 +66,10 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ClickupProject  $clickupProject
+     * @param  \App\Models\CProject  $CProject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClickupProject $clickupProject)
+    public function update(Request $request, CProject $CProject)
     {
         //
     }
@@ -76,11 +77,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ClickupProject  $clickupProject
+     * @param  \App\Models\CProject  $CProject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClickupProject $clickupProject)
+    public function destroy(CProject $CProject)
     {
         //
     }
+
 }

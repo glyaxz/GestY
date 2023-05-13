@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\ClickupList;
+use App\Models\CList;
 use App\Models\Empleado;
 use App\Models\EmpleadoTasks;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class Task extends Model
     use HasFactory;
 
     public function list(){
-        return $this->belongsTo(ClickupList::class);
+        return $this->belongsTo(CList::class);
     }
 
     public function empleados(): BelongsToMany{
