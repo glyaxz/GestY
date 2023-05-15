@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gesty/src/App.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:get/get.dart';
+import 'routes/routes.dart';
 
 void main() => runApp(
-  App()
+    GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      getPages: appRoutes(),
+      initialRoute: '/'
+    )
 );
