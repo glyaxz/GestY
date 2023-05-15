@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -20,6 +21,12 @@ return new class extends Migration
             $table->string('company_name');
             $table->timestamps();
         });
+
+        DB::table('companies')->insert([
+            'company_id' => 1,
+            'company_ref' => 'cvs34s',
+            'company_name' => 'Gesty Admin'
+        ]);
     }
 
     /**

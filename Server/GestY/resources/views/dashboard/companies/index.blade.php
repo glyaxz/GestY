@@ -8,7 +8,7 @@
     @if(Auth::user()->isAdmin())
         <div class="c-buttons">
         @foreach ($empresas as $c)
-                <a href="{{ route('company.show', $c) }}" class="btn btn-company"> {{ $c->company_name }} </a>
+            <a href="{{ route('company.show', $c) }}" class="btn btn-company"> {{ $c->company_name }} </a>
         @endforeach
     @else
         <div class="c-button">

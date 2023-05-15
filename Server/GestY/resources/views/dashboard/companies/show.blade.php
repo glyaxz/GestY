@@ -26,9 +26,13 @@
             {{$company->company_ref}}
         </td>
         <td>
-            <div>
-                <a href="" class="btn-action btn-view">Ver Tareas</a>
-                <a href="" class="btn-action btn-view">Ver Empleados</a>
+            <div class="flex justify-center">
+                <form action="{{ route('projects.projects', $company->id) }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn-action btn-view">Ver Projectos</button>
+                </form>
+                @csrf
+                <a href="{{ route('empleados.index', $company->id) }}" class="btn-action btn-view">Ver Empleados</a>
             </div>
         </td>
     </tbody>

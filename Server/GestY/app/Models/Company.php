@@ -23,4 +23,9 @@ class Company extends Model
     public function getReference(){
         return $this->company_ref;
     }
+
+    public static function getEmpleados(String $companyId){
+        $empleados = Empleado::query()->get()->where('company_id', $companyId)->toArray();
+        return $empleados;
+    }
 }

@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
 {
-    public function index()
+    public function index(int $companyId)
     {
-        $empleados = Empleado::paginate(20);
-        echo view('dashboard.empleados.index', compact('empleados'));
+        $all = Empleado::all();
+        $empleados = Empleado::query()->get()->where('company_id', $companyId);
+        echo view('dashboard.companies.empleados.index', compact('companyId', 'empleados'));
 
     }
 
