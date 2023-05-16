@@ -27,31 +27,6 @@
                     <li>
                         <a href="{{ route('company.index', Auth::user()) }}" class="btn btn-fichar" aria-current="page">Empresas</a>
                     </li>
-                    {{-- @auth
-                        @if(Auth::user()->isAdmin())
-                            <li>
-                                <a href="{{ route('fichajes.index') }}" class="btn btn-fichar" aria-current="page">Fichajes</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('empleados.index') }}" class="btn btn-fichar" aria-current="page">Empleados</a>
-                            </li>
-                            <li>
-                                <a href="{{ route("horas.index")}}" class="btn btn-fichar" aria-current="page">Horas</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->desfichar())
-                            <form action="{{ route('fichajes.update', Auth::user()->lastfichaje(Auth::user()->getEmpleado())) }}" method="POST" enctype="multipart/form-data">
-                                @method("PUT")
-                                @csrf
-                                <button class="btn btn-fichar" type="submit">Desfichar</button>
-                            </form>
-                        @else
-                            <form action="{{ route('fichajes.store') }}" method="POST">
-                                @csrf
-                                <button class="btn btn-fichar" type="submit">Fichar</button>
-                            </form>
-                        @endif
-                    @endauth --}}
                 </ul>
             </div>
         </div>

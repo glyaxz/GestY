@@ -20,18 +20,16 @@ class _CompanyPageState extends State<CompanyPage> {
     screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Empresas')
-      ),
+      appBar: AppBar(title: const Text('Empresas')),
       body: buildCompanyPage(),
     );
   }
 
-  Widget buildCompanyPage(){
+  Widget buildCompanyPage() {
     return GetBuilder<CompanyProvider>(
       init: CompanyProvider(),
-      builder: (controller){
-        if(controller.loading) {
+      builder: (controller) {
+        if (controller.loading) {
           return SizedBox(
             height: screenSize.height,
             width: screenSize.width,
@@ -39,14 +37,14 @@ class _CompanyPageState extends State<CompanyPage> {
               child: customLoadingPage(),
             ),
           );
-        }else{
+        } else {
           return buildCompanyList();
         }
       },
     );
   }
 
-  Widget buildCompanyList(){
+  Widget buildCompanyList() {
     return SizedBox(
       height: screenSize.height,
       width: screenSize.width,
@@ -55,13 +53,14 @@ class _CompanyPageState extends State<CompanyPage> {
           itemCount: controller.companies.length,
           scrollDirection: Axis.vertical,
           padding: const EdgeInsets.only(bottom: 10),
-          itemBuilder: (context, index) => buildCompanyCard(controller.companies[index]),
+          itemBuilder: (context, index) =>
+              buildCompanyCard(controller.companies[index]),
         ),
       ),
     );
   }
 
-  Widget buildCompanyCard(Company company){
+  Widget buildCompanyCard(Company company) {
     return Text(company.companyName!);
   }
 }
