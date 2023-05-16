@@ -218,46 +218,46 @@ public class GestyConnector {
     }
 
     //public Company getCompany(){
-    public Company getCompany(Empleado logged){
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-
-        try {
-            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-company");
-            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
-            request.setHeader("Authorization", token);
-
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
-            request.setEntity(new UrlEncodedFormEntity(params));
-
-            CloseableHttpResponse response = httpClient.execute(request);
+        public Company getCompany(Empleado logged){
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+    
             try {
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    String result = EntityUtils.toString(entity);
-                    System.out.println("DEBUG: " + result);
-                    if(!result.equals("")){
-                        Gson gson = new Gson(); 
-                        JsonObject list = gson.fromJson(result, JsonObject.class);
-                        httpClient.close();
-                        response.close();
-                        return new Company(list);                
-                    }else{
-                        httpClient.close();
-                        response.close();
-                        return null;
+                HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-company");
+                request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+                request.setHeader("Authorization", token);
+    
+                List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
+                request.setEntity(new UrlEncodedFormEntity(params));
+
+                CloseableHttpResponse response = httpClient.execute(request);
+                try {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        String result = EntityUtils.toString(entity);
+                        System.out.println("DEBUG: " + result);
+                        if(!result.equals("")){
+                            Gson gson = new Gson(); 
+                            JsonObject list = gson.fromJson(result, JsonObject.class);
+                            httpClient.close();
+                            response.close();
+                            return new Company(list);                
+                        }else{
+                            httpClient.close();
+                            response.close();
+                            return null;
+                        }
                     }
+                }catch(ParseException e){
+                    e.printStackTrace();
+                    httpClient.close();
+                    response.close();
+                    return null;
                 }
-            }catch(ParseException e){
-                e.printStackTrace();
-                httpClient.close();
-                response.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
                 return null;
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
             return null;
         }
-        return null;
-    }
 }

@@ -14,6 +14,7 @@ public class Company {
     //Variables
     private String name, companyRef;
     private int id;
+    private Project[] projects;
 
     public Company(int id, String name, String companyRef){
         this.id = id;

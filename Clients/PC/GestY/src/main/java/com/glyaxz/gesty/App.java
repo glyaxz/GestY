@@ -21,6 +21,7 @@ public class App extends javax.swing.JFrame {
     public Empleado logged;
     GestyConnector gc;
     static App app;
+    Company company;
     /**
      * Creates new form App
      */
@@ -46,7 +47,7 @@ public class App extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         app.checkRef();
-        System.out.println("hola");
+        company = gc.getCompany(logged);
         BufferedImage myPicture;
         // try {
         //     myPicture = ImageIO.read(new File("logo.png"));

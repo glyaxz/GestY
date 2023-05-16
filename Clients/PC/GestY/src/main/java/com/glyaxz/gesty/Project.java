@@ -12,6 +12,7 @@ public class Project {
     private String name;
     private int id;
     private Company company;
+    private Task[] tasks;
 
     public Project(String name, int id, Company company){
         this.name = name;
