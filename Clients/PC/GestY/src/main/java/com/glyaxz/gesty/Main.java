@@ -6,14 +6,14 @@ package com.glyaxz.gesty;
 
 /**
  *
- * @author bokax
+ * @author Javier Garcia
  */
 public class Main extends javax.swing.JFrame {
 
     //Variables
     GestyConnector gc;
     App app;
-    Empleado logged = null;
+    Empleado logged;
     
     //App
     
@@ -108,8 +108,10 @@ public class Main extends javax.swing.JFrame {
             String email = txtEmail.getText();
             String pass = txtPass.getText();
 
-            logged = gc.login(email, pass);
+            this.logged = gc.login(email, pass);
+            System.out.println(logged);
             if(logged != null){
+                System.out.println(logged);
                 app = new App(logged, gc);
                 this.setVisible(false);
                 app.setVisible(true);

@@ -9,7 +9,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 /**
  *
- * @author glyaxz
+ * @author Javier Garcia
  */
 
 

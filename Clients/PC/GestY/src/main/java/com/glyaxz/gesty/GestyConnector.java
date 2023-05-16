@@ -23,10 +23,9 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 /**
  *
- * @author bokax
+ * @author Javier Garcia
  */
 public class GestyConnector {
     
@@ -59,8 +58,10 @@ public class GestyConnector {
                         result = EntityUtils.toString(entity);
                         String formatted = result.replace("\"","");
                         sessionId = formatted.substring(formatted.indexOf("|") + 1);
+                        System.out.println(sessionId);
                         if(!sessionId.contains("<!DOCTYPE html>")){
                             logged = new Empleado(email, sessionId);
+                            System.out.println(logged);
                             return logged;
                         }else{
                             return null;
@@ -94,7 +95,6 @@ public class GestyConnector {
             HttpPost request = new HttpPost("https://gesty.devf6.es/api/check-ref");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
-            request.setHeader("gesty_session", sessionId);
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("companyRef", companyRef));
@@ -150,9 +150,9 @@ public class GestyConnector {
                         
                         if(!result.equals("")){
                             Gson gson = new Gson();
-                            JsonObject obj = gson.fromJson(result, JsonObject.class);
+                            JsonObject obj =  gson.fromJson(result, JsonObject.class);
                             int setted = obj.get("company_id").getAsInt();
-                            System.out.println(setted);
+                            this.logged.setCompanyId(setted);
                             return true;
                         }else{
                             return false;
@@ -194,6 +194,50 @@ public class GestyConnector {
                 if (entity != null) {
                     String result = EntityUtils.toString(entity);
                     if(!result.equals("")){
+                        logged.setCompanyRef(ref);
+                        httpClient.close();
+                        response.close();
+                        return true;
+                    }else{
+                        httpClient.close();
+                        response.close();
+                        return false;
+                    }
+                }
+            }catch(ParseException e){
+                e.printStackTrace();
+                httpClient.close();
+                response.close();
+                return false;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    //public Company getCompany(){
+    public boolean getCompany(Empleado logged){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-company");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    System.out.println(result);
+                    if(!result.equals("")){
+                        System.out.println("DEBUG: " + result);
                         httpClient.close();
                         response.close();
                         return true;

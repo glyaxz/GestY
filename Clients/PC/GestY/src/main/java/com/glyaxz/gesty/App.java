@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author glyaxz
+ * @author Javier Garcia
  */
 public class App extends javax.swing.JFrame {
-    Empleado logged;
+    public Empleado logged;
     GestyConnector gc;
     static App app;
     /**
@@ -39,19 +39,20 @@ public class App extends javax.swing.JFrame {
     }
 
     public App(Empleado logged, GestyConnector gc) {
+        app = this;
         this.logged = logged;
+        System.out.println(logged);
         this.gc = gc;
         initComponents();
         setLocationRelativeTo(null);
-        app = this;
         app.checkRef();
         BufferedImage myPicture;
-        try {
-            myPicture = ImageIO.read(new File("logo.png"));
-            ico = new JLabel(new ImageIcon(myPicture));
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // try {
+        //     myPicture = ImageIO.read(new File("logo.png"));
+        //     ico = new JLabel(new ImageIcon(myPicture));
+        // } catch (IOException ex) {
+        //     Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        // }
     }
 
     /**
@@ -65,6 +66,7 @@ public class App extends javax.swing.JFrame {
 
         jpApp = new javax.swing.JPanel();
         ico = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jpRef = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRefAccept = new javax.swing.JButton();
@@ -80,6 +82,15 @@ public class App extends javax.swing.JFrame {
         ico.setMinimumSize(new java.awt.Dimension(800, 600));
         jpApp.add(ico);
         ico.setBounds(6, 6, 102, 85);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jpApp.add(jButton1);
+        jButton1.setBounds(350, 280, 75, 23);
 
         jpRef.setMinimumSize(new java.awt.Dimension(800, 600));
         jpRef.setLayout(null);
@@ -138,6 +149,12 @@ public class App extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefAcceptActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println("EMPLEADO PRE GETCOMPANY: " + logged.getEmail());
+        boolean test = gc.getCompany(logged);
+        System.out.println(test);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -166,11 +183,11 @@ public class App extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new App().setVisible(true);
-            }
-        });
+        // java.awt.EventQueue.invokeLater(new Runnable() {
+        //     public void run() {
+        //         new App().setVisible(true);
+        //     }
+        // });
         
     }
 
@@ -217,6 +234,7 @@ public class App extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefAccept;
     private javax.swing.JLabel ico;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jpApp;
     private javax.swing.JPanel jpRef;

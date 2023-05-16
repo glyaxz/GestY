@@ -26,7 +26,13 @@ Route::middleware('client')->group( function() {
     Route::post('check-ref', [ClientController::class, 'checkRef']);
     Route::post('check-user-ref', [ClientController::class, 'checkUserRef']);
     Route::put('set-user-ref', [ClientController::class, 'setUserRef']);
-    Route::post('get-companies', [ClientController::class, 'getCompanies']);
+    Route::post('get-company', [ClientController::class, 'getCompany']);
     Route::post('get-projects', [ClientController::class, 'getProjects']);
     Route::post('get-tasks', [ClientController::class, 'getTasks']);
+});
+
+Route::middleware('admin')->group( function() {
+    Route::post('companies', [ClientController::class, 'companies']);
+    Route::post('projects', [ClientController::class, 'projects']);
+    Route::post('tasks', [ClientController::class, 'tasks']);
 });

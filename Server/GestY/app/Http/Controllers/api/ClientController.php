@@ -39,16 +39,21 @@ class ClientController extends Controller
         return $company ?? null;
     }
 
-    public function getCompanies(){
-        $company = Company::all();
-
-        return $company ?? null;
+    public function getCompany(Request $request){
+        try{
+            $companyid = $request->company_id;
+            Log::channel('daily')->info($companyid);
+            $company = Company::query()->get()->where('id', $companyid)->first();
+            return $company ?? null;
+        }catch(ErrorException $e){
+            Log::channel('daily')->info($e);
+        }
     }
 
     public function getProjects(Request $request){
         $companyId = $request->get('company_id');
         try{
-            $company = Company::query()->get()->where('company_id', $companyId)->first();
+            $company = Company::query()->get()->where('id', $companyId)->first();
             $projects = CProject::query()->from('projects')->get()->where('company_id', $company->id);
             return $projects ?? null;
         }catch(ErrorException){
@@ -67,6 +72,37 @@ class ClientController extends Controller
         }catch(ErrorException){
             return null;
         }
+    }
+
+    //ADMIN ZONE
+    public function companies(){
+        $companies = Company::all();
+        return $companies;
+    }
+
+
+    public function projects(Request $request){
+        $companyId = $request->get('company_id');
+        try{
+            $company = Company::query()->get()->where('company_id', $companyId)->first();
+            $projects = CProject::query()->from('projects')->get()->where('company_id', $company->id);
+            return $projects ?? null;
+        }catch(ErrorException){
+            return null;
+        }
 
     }
+
+
+    public function tasks(Request $request){
+        $projectId = $request->get('project_id');
+        try{
+            $project = CProject::query()->from('projects')->get()->where('project_id', $projectId)->first();
+            $tasks = Task::query()->get()->where('project_id', $project->id);
+            return $tasks;
+        }catch(ErrorException){
+            return null;
+        }
+    }
+
 }
