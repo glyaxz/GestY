@@ -33,7 +33,7 @@ public class Empleado extends User{
         Gson gson = new Gson();
         JsonObject obj = gson.fromJson(company, JsonObject.class);
         String companyName = obj.get("company_name").getAsString();
-        System.out.println(companyName);
+        System.out.println("DEBUG: " + companyName);
     }
     public String getCompanyId(){
         return this.companyId;

@@ -109,9 +109,9 @@ public class Main extends javax.swing.JFrame {
             String pass = txtPass.getText();
 
             this.logged = gc.login(email, pass);
-            System.out.println(logged);
+            System.out.println("DEBUG: " + logged);
             if(logged != null){
-                System.out.println(logged);
+                System.out.println("DEBUG: " + logged);
                 app = new App(logged, gc);
                 this.setVisible(false);
                 app.setVisible(true);
@@ -160,7 +160,6 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
-                
             }
         });
     }

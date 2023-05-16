@@ -4,6 +4,8 @@
  */
 package com.glyaxz.gesty;
 
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author Javier Garcia
@@ -17,6 +19,12 @@ public class Company {
         this.id = id;
         this.name = name;
         this.companyRef = companyRef;
+    }
+
+    public Company(JsonObject json){
+        id = json.get("id").getAsInt();
+        name = json.get("company_name").getAsString();
+        companyRef = json.get("company_ref").getAsString();
     }
 
     //Getters & Setters

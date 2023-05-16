@@ -58,10 +58,10 @@ public class GestyConnector {
                         result = EntityUtils.toString(entity);
                         String formatted = result.replace("\"","");
                         sessionId = formatted.substring(formatted.indexOf("|") + 1);
-                        System.out.println(sessionId);
+                        System.out.println("DEBUG: " + sessionId);
                         if(!sessionId.contains("<!DOCTYPE html>")){
                             logged = new Empleado(email, sessionId);
-                            System.out.println(logged);
+                            System.out.println("DEBUG: " + logged);
                             return logged;
                         }else{
                             return null;
@@ -82,7 +82,7 @@ public class GestyConnector {
             return null;
         }
     }
-
+    
     public Empleado getUserLogged(){
         return logged;
     }
@@ -218,7 +218,7 @@ public class GestyConnector {
     }
 
     //public Company getCompany(){
-    public boolean getCompany(Empleado logged){
+    public Company getCompany(Empleado logged){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
@@ -235,28 +235,29 @@ public class GestyConnector {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     String result = EntityUtils.toString(entity);
-                    System.out.println(result);
+                    System.out.println("DEBUG: " + result);
                     if(!result.equals("")){
-                        System.out.println("DEBUG: " + result);
+                        Gson gson = new Gson(); 
+                        JsonObject list = gson.fromJson(result, JsonObject.class);
                         httpClient.close();
                         response.close();
-                        return true;
+                        return new Company(list);                
                     }else{
                         httpClient.close();
                         response.close();
-                        return false;
+                        return null;
                     }
                 }
             }catch(ParseException e){
                 e.printStackTrace();
                 httpClient.close();
                 response.close();
-                return false;
+                return null;
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
-        return false;
+        return null;
     }
 }

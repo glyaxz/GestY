@@ -41,11 +41,12 @@ public class App extends javax.swing.JFrame {
     public App(Empleado logged, GestyConnector gc) {
         app = this;
         this.logged = logged;
-        System.out.println(logged);
+        System.out.println("DEBUG: " + logged);
         this.gc = gc;
         initComponents();
         setLocationRelativeTo(null);
         app.checkRef();
+        System.out.println("hola");
         BufferedImage myPicture;
         // try {
         //     myPicture = ImageIO.read(new File("logo.png"));
@@ -84,11 +85,6 @@ public class App extends javax.swing.JFrame {
         ico.setBounds(6, 6, 102, 85);
 
         jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jpApp.add(jButton1);
         jButton1.setBounds(350, 280, 75, 23);
 
@@ -149,12 +145,6 @@ public class App extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefAcceptActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("EMPLEADO PRE GETCOMPANY: " + logged.getEmail());
-        boolean test = gc.getCompany(logged);
-        System.out.println(test);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -183,11 +173,11 @@ public class App extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        // java.awt.EventQueue.invokeLater(new Runnable() {
-        //     public void run() {
-        //         new App().setVisible(true);
-        //     }
-        // });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //
+            }
+        });
         
     }
 
@@ -205,11 +195,11 @@ public class App extends javax.swing.JFrame {
     }
     public void checkRef(){
         if(gc.hasRef(this.logged)){
-            System.out.println("tiene ref");
+            System.out.println("DEBUG: " + "tiene ref");
             app.jpApp.setVisible(true);
             app.jpRef.setVisible(false);
         }else{
-            System.out.println("no tiene ref");
+            System.out.println("DEBUG: " + "no tiene ref");
             app.jpApp.setVisible(false);
             app.jpRef.setVisible(true);
         }
@@ -224,7 +214,7 @@ public class App extends javax.swing.JFrame {
             }
         });
         wait.run();
-        System.out.println("WIP -> FUNCTION TO UPDATE APP WHEN UPDATE COMPANY_REF");
+        System.out.println("DEBUG: " + "WIP -> FUNCTION TO UPDATE APP WHEN UPDATE COMPANY_REF");
     }
     public void loadApp(){
         jpRef.setVisible(false);
