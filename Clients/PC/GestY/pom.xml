@@ -38,5 +38,10 @@
             <artifactId>swing-layout</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.vincenzopalazzo</groupId>
+            <artifactId>material-ui-swing</artifactId>
+            <version>1.1.4</version>
+        </dependency>
     </dependencies>
 </project>

@@ -4,19 +4,29 @@
  */
 package com.glyaxz.gesty;
 
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author Javier Garcia
  */
 public class Task {
     private String name;
+    private String description;
     private int id;
-    private List list;
+    private Project project;
 
-    public Task(String name, int id, List list){
+    public Task(String name, String desc, int id){
         this.name = name;
+        this.description = desc;
         this.id = id;
-        this.list = list;
+    }
+
+    public Task(JsonObject json, Project project){
+        this.name = json.get("task_name").getAsString();
+        this.description = json.get("task_desc").getAsString();
+        this.id = json.get("id").getAsInt();
+        this.project = project;
     }
 
     public void setName(String name){
@@ -31,10 +41,10 @@ public class Task {
     public int getId(){
         return this.id;
     }
-    public void setList(List list){
-        this.list = list;
+    public void setDesc(String desc){
+        this.description = desc;
     }
-    public List getList(){
-        return this.list;
+    public String getDesc(){
+        return this.description;
     }
 }

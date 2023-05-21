@@ -4,14 +4,14 @@
  */
 package com.glyaxz.gesty;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.util.List;
+
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.UIManager;
+
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
 
 /**
  *
@@ -30,25 +30,23 @@ public class App extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         app = this;
         app.checkRef();
-        BufferedImage myPicture;
-        try {
-            myPicture = ImageIO.read(new File("logo.png"));
-            ico = new JLabel(new ImageIcon(myPicture));
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ico.setIcon(new ImageIcon("logo.png"));
+        app.setIconImage(new ImageIcon("logo.png").getImage());
     }
 
     public App(Empleado logged, GestyConnector gc) {
         app = this;
         this.logged = logged;
-        System.out.println("DEBUG: " + logged);
+        System.out.println(" " + logged);
         this.gc = gc;
         initComponents();
         setLocationRelativeTo(null);
         app.checkRef();
+        logged.setCompany();
         company = gc.getCompany(logged);
-        BufferedImage myPicture;
+        ico.setIcon(new ImageIcon("logo.png"));
+        lblCompany.setText(logged.getCompany().getName());
+
         // try {
         //     myPicture = ImageIO.read(new File("logo.png"));
         //     ico = new JLabel(new ImageIcon(myPicture));
@@ -66,13 +64,40 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
+        pnlOptions = new javax.swing.JDialog();
         jpApp = new javax.swing.JPanel();
         ico = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnTareas = new javax.swing.JButton();
+        btnProjects = new javax.swing.JButton();
+        btnOptions = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel2 = new javax.swing.JLabel();
+        lblCompany = new javax.swing.JLabel();
         jpRef = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRefAccept = new javax.swing.JButton();
         txtRefUser = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+
+        pnlOptions.setMinimumSize(new java.awt.Dimension(600, 400));
+
+        javax.swing.GroupLayout pnlOptionsLayout = new javax.swing.GroupLayout(pnlOptions.getContentPane());
+        pnlOptions.getContentPane().setLayout(pnlOptionsLayout);
+        pnlOptionsLayout.setHorizontalGroup(
+            pnlOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+        pnlOptionsLayout.setVerticalGroup(
+            pnlOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -81,13 +106,65 @@ public class App extends javax.swing.JFrame {
         jpApp.setMinimumSize(new java.awt.Dimension(800, 600));
         jpApp.setLayout(null);
 
-        ico.setMinimumSize(new java.awt.Dimension(800, 600));
+        ico.setMinimumSize(new java.awt.Dimension(100, 100));
         jpApp.add(ico);
-        ico.setBounds(6, 6, 102, 85);
+        ico.setBounds(50, 50, 100, 100);
 
-        jButton1.setText("jButton1");
-        jpApp.add(jButton1);
-        jButton1.setBounds(350, 280, 75, 23);
+        btnTareas.setText("Tareas");
+        btnTareas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTareasActionPerformed(evt);
+            }
+        });
+        jpApp.add(btnTareas);
+        btnTareas.setBounds(40, 200, 120, 40);
+
+        btnProjects.setText("Proyectos");
+        btnProjects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProjectsActionPerformed(evt);
+            }
+        });
+        jpApp.add(btnProjects);
+        btnProjects.setBounds(40, 280, 120, 40);
+
+        btnOptions.setText("Opciones");
+        btnOptions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOptionsActionPerformed(evt);
+            }
+        });
+        jpApp.add(btnOptions);
+        btnOptions.setBounds(40, 360, 120, 40);
+
+        btnExit.setText("Salir");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        jpApp.add(btnExit);
+        btnExit.setBounds(40, 440, 120, 40);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+
+        jpApp.add(jLayeredPane1);
+        jLayeredPane1.setBounds(230, 80, 510, 450);
+
+        jLabel2.setText("Empresa:");
+        jpApp.add(jLabel2);
+        jLabel2.setBounds(30, 560, 60, 20);
+        jpApp.add(lblCompany);
+        lblCompany.setBounds(90, 560, 130, 20);
 
         jpRef.setMinimumSize(new java.awt.Dimension(800, 600));
         jpRef.setLayout(null);
@@ -116,6 +193,46 @@ public class App extends javax.swing.JFrame {
         });
         jpRef.add(txtRefUser);
         txtRefUser.setBounds(290, 240, 250, 100);
+
+        jMenu4.setText("GestY");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setMnemonic('T');
+        jMenuItem1.setText("Tareas");
+        jMenuItem1.setToolTipText("Ir a Tareas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem2.setMnemonic('P');
+        jMenuItem2.setText("Proyectos");
+        jMenuItem2.setToolTipText("Ir a Proyectos");
+        jMenu4.add(jMenuItem2);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        jMenuItem3.setText("Salir");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu2.setText("Opciones");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,6 +263,37 @@ public class App extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefAcceptActionPerformed
 
+    private void btnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTareasActionPerformed
+
+    private void btnOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionsActionPerformed
+        // TODO add your handling code here:        pnlOptions.setVisible(true);
+
+        
+    }//GEN-LAST:event_btnOptionsActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        exitApp();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnProjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectsActionPerformed
+        List<Project> projects = gc.getProjects(logged);
+        
+    }//GEN-LAST:event_btnProjectsActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        exitApp();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        pnlOptions.setVisible(true);
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -156,18 +304,7 @@ public class App extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialLiteTheme()));
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -196,11 +333,9 @@ public class App extends javax.swing.JFrame {
     }
     public void checkRef(){
         if(gc.hasRef(this.logged)){
-            System.out.println("DEBUG: " + "tiene ref");
             app.jpApp.setVisible(true);
             app.jpRef.setVisible(false);
         }else{
-            System.out.println("DEBUG: " + "no tiene ref");
             app.jpApp.setVisible(false);
             app.jpRef.setVisible(true);
         }
@@ -221,14 +356,32 @@ public class App extends javax.swing.JFrame {
         jpRef.setVisible(false);
         jpApp.setVisible(true);
     }
+    
+    public void exitApp(){
+        System.exit(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnOptions;
+    private javax.swing.JButton btnProjects;
     private javax.swing.JButton btnRefAccept;
+    private javax.swing.JButton btnTareas;
     private javax.swing.JLabel ico;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpApp;
     private javax.swing.JPanel jpRef;
+    private javax.swing.JLabel lblCompany;
+    private javax.swing.JDialog pnlOptions;
     private javax.swing.JTextField txtRefUser;
     // End of variables declaration//GEN-END:variables
 }

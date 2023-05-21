@@ -12,12 +12,14 @@ import com.google.gson.JsonObject;
  * @author Javier Garcia
  */
 public class Empleado extends User{
-    GestyConnector gc;
+    private GestyConnector gc;
     private String companyId;
+    private Company company;
 
     public Empleado(String email, String sessionId, String companyId) {
         super(email, sessionId);
         this.companyId = companyId;
+        this.company = null;
         gc = new GestyConnector();
     }
 
@@ -25,6 +27,7 @@ public class Empleado extends User{
         super(email, sessionId);
         this.companyId = null;
         gc = new GestyConnector();
+        this.company = gc.getCompany(this);
     }
     
     public void setCompanyRef(String companyId){
@@ -33,8 +36,8 @@ public class Empleado extends User{
         Gson gson = new Gson();
         JsonObject obj = gson.fromJson(company, JsonObject.class);
         String companyName = obj.get("company_name").getAsString();
-        System.out.println("DEBUG: " + companyName);
     }
+    
     public String getCompanyId(){
         return this.companyId;
     }
@@ -46,5 +49,13 @@ public class Empleado extends User{
     @Override
     public String toString(){
         return "email: " + this.getEmail() + ", sessionId: " + this.getSessionId();
+    }
+
+    public Company getCompany(){
+        return this.company;
+    }
+
+    public void setCompany(){
+        this.company = gc.getCompany(this);
     }
 }

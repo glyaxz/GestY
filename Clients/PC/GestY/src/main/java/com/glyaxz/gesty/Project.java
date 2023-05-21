@@ -4,6 +4,10 @@
  */
 package com.glyaxz.gesty;
 
+import java.util.List;
+
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author Javier Garcia
@@ -12,12 +16,21 @@ public class Project {
     private String name;
     private int id;
     private Company company;
-    private Task[] tasks;
+    private List<Task> tasks;
+    GestyConnector gc;
 
     public Project(String name, int id, Company company){
         this.name = name;
         this.id = id;
         this.company = company;
+        this.gc = new GestyConnector();
+    }
+
+    public Project(JsonObject json, Empleado logged){
+        this.gc = new GestyConnector();
+        this.name = json.get("project_name").getAsString();
+        this.id = json.get("id").getAsInt();
+        this.company = logged.getCompany();
     }
 
     public void setName(String name){
@@ -37,5 +50,11 @@ public class Project {
     }
     public Company getCompany(){
         return this.company;
+    }
+    public void setTasks(List<Task> tasks){
+        this.tasks = tasks;
+    }
+    public List<Task> getTasks(){
+        return tasks;
     }
 }

@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+  cms:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    restart: "no"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./appcore2018:/var/www/html/
+      - ./php:/usr/local/etc/php/php.ini
+      # - ./php/php.ini-development:/usr/local/etc/php/php.ini-development
+      # - ./php/php.ini-production:/usr/local/etc/php/php.ini-production
+  db:
+    image: mariadb:${TAG_MYSQL:-latest}
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_SCHEMA}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: "no"
+    ports:
+      - 58080:8080
+
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: "no"
+    ports:
+      - 1883:1883
+      - 9001:9001
+    # volumes:
+    # - mosquitto.conf:/mosquitto/config/mosquitto.conf
+volumes:
+  db:

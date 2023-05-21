@@ -4,6 +4,13 @@
  */
 package com.glyaxz.gesty;
 
+import java.awt.Desktop;
+import java.net.URI;
+import javax.swing.UIManager;
+
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
+
 /**
  *
  * @author Javier Garcia
@@ -43,10 +50,11 @@ public class Main extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         txtPass = new javax.swing.JPasswordField();
         txtError = new javax.swing.JLabel();
+        btnRegister = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(500, 400));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -56,23 +64,23 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtEmail);
-        txtEmail.setBounds(150, 120, 180, 26);
+        txtEmail.setBounds(190, 130, 180, 30);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Correo");
+        jLabel1.setText("Correo  ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(60, 120, 73, 16);
+        jLabel1.setBounds(80, 130, 90, 30);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Contraseña");
+        jLabel2.setText("Contraseña  ");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(60, 160, 73, 20);
+        jLabel2.setBounds(90, 180, 80, 30);
 
         jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Bienvenido a Gesty");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(80, 40, 230, 30);
+        jLabel3.setBounds(140, 50, 230, 30);
 
         btnLogin.setText("Iniciar sesion");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +89,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(140, 210, 110, 27);
+        btnLogin.setBounds(190, 250, 120, 30);
 
         txtPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,12 +97,22 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtPass);
-        txtPass.setBounds(150, 160, 180, 26);
+        txtPass.setBounds(190, 180, 180, 30);
 
         txtError.setForeground(new java.awt.Color(255, 102, 102));
         txtError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(txtError);
-        txtError.setBounds(90, 80, 220, 20);
+        txtError.setBounds(150, 110, 220, 20);
+
+        btnRegister.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRegister.setText("¿No tienes cuenta? Registrate aqui");
+        btnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegisterMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnRegister);
+        btnRegister.setBounds(130, 300, 230, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -109,9 +127,7 @@ public class Main extends javax.swing.JFrame {
             String pass = txtPass.getText();
 
             this.logged = gc.login(email, pass);
-            System.out.println("DEBUG: " + logged);
             if(logged != null){
-                System.out.println("DEBUG: " + logged);
                 app = new App(logged, gc);
                 this.setVisible(false);
                 app.setVisible(true);
@@ -129,6 +145,21 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPassActionPerformed
 
+    private void btnRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseClicked
+        try {
+            // Verificar si el Desktop es compatible con la acción de abrir el navegador
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("https://gesty.devf6.es/register"));
+            } else {
+                // Si no es compatible, puedes manejarlo de alguna otra manera (por ejemplo, abrir el enlace en un enlace etiquetado en tu aplicación)
+                System.out.println("El navegador web no es compatible en este sistema.");
+            }
+        } catch (Exception e) {
+            // Manejo de excepciones si ocurre algún error al abrir el navegador
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnRegisterMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -139,20 +170,9 @@ public class Main extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialLiteTheme()));
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -166,6 +186,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

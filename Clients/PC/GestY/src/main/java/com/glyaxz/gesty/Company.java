@@ -4,6 +4,8 @@
  */
 package com.glyaxz.gesty;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 
 /**
@@ -14,7 +16,7 @@ public class Company {
     //Variables
     private String name, companyRef;
     private int id;
-    private Project[] projects;
+    private List<Project> projects;
 
     public Company(int id, String name, String companyRef){
         this.id = id;
@@ -46,5 +48,12 @@ public class Company {
     }
     public int getId(){
         return this.id;
+    }
+    public List<Project> getProjects(){
+        return this.projects;
+    }
+
+    public void setProjects(List<Project> projects){
+        this.projects = projects;
     }
 }

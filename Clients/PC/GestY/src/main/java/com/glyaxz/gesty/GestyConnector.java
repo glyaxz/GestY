@@ -22,6 +22,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 /**
  *
@@ -58,10 +59,8 @@ public class GestyConnector {
                         result = EntityUtils.toString(entity);
                         String formatted = result.replace("\"","");
                         sessionId = formatted.substring(formatted.indexOf("|") + 1);
-                        System.out.println("DEBUG: " + sessionId);
                         if(!sessionId.contains("<!DOCTYPE html>")){
                             logged = new Empleado(email, sessionId);
-                            System.out.println("DEBUG: " + logged);
                             return logged;
                         }else{
                             return null;
@@ -217,47 +216,135 @@ public class GestyConnector {
         return false;
     }
 
-    //public Company getCompany(){
-        public Company getCompany(Empleado logged){
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-    
-            try {
-                HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-company");
-                request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
-                request.setHeader("Authorization", token);
-    
-                List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
-                request.setEntity(new UrlEncodedFormEntity(params));
+    public Company getCompany(Empleado logged){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-                CloseableHttpResponse response = httpClient.execute(request);
-                try {
-                    HttpEntity entity = response.getEntity();
-                    if (entity != null) {
-                        String result = EntityUtils.toString(entity);
-                        System.out.println("DEBUG: " + result);
-                        if(!result.equals("")){
-                            Gson gson = new Gson(); 
-                            JsonObject list = gson.fromJson(result, JsonObject.class);
-                            httpClient.close();
-                            response.close();
-                            return new Company(list);                
-                        }else{
-                            httpClient.close();
-                            response.close();
-                            return null;
-                        }
+        try {
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-company");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    if(!result.equals("")){
+                        Gson gson = new Gson(); 
+                        JsonObject list = gson.fromJson(result, JsonObject.class);
+                        httpClient.close();
+                        response.close();
+                        return new Company(list);                
+                    }else{
+                        httpClient.close();
+                        response.close();
+                        return null;
                     }
-                }catch(ParseException e){
-                    e.printStackTrace();
-                    httpClient.close();
-                    response.close();
-                    return null;
                 }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            }catch(ParseException e){
+                e.printStackTrace();
+                httpClient.close();
+                response.close();
                 return null;
             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
+        return null;
+    }
+
+    public List<Project> getProjects(Empleado logged){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-projects");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    if(!result.equals("")){
+                        Gson gson = new Gson(); 
+                        JsonArray list = gson.fromJson(result, JsonArray.class);
+                        httpClient.close();
+                        response.close();
+                        List<Project> projects = new ArrayList<Project>();
+                        list.forEach(p -> projects.add(new Project(p.getAsJsonObject(), logged)));
+                        logged.getCompany().setProjects(projects);
+                        return projects;          
+                    }else{
+                        httpClient.close();
+                        response.close();
+                        return null;
+                    }
+                }
+            }catch(ParseException e){
+                e.printStackTrace();
+                httpClient.close();
+                response.close();
+                return null;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public List<Task> getTasks(Project project, Empleado logged){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-projects");
+            request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
+            request.setHeader("Authorization", token);
+
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("project_id", String.valueOf(project.getId())));
+            request.setEntity(new UrlEncodedFormEntity(params));
+
+            CloseableHttpResponse response = httpClient.execute(request);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity);
+                    if(!result.equals("")){
+                        Gson gson = new Gson(); 
+                        JsonArray list = gson.fromJson(result, JsonArray.class);
+                        httpClient.close();
+                        response.close();
+                        List<Task> tasks = new ArrayList<Task>();
+                        list.forEach(p -> tasks.add(new Task(p.getAsJsonObject(), project)));
+                        project.setTasks(tasks);
+                        return tasks;          
+                    }else{
+                        httpClient.close();
+                        response.close();
+                        return null;
+                    }
+                }
+            }catch(ParseException e){
+                e.printStackTrace();
+                httpClient.close();
+                response.close();
+                return null;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return null;
+    }
 }
