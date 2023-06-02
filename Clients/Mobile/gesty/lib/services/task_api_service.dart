@@ -6,7 +6,7 @@ import 'package:gesty/config/config.dart';
 class TaskApiService {
   static Future<List<Task>> getTasks(int projectId) async {
     final response = await http.post(
-      Uri.parse('$base_url/get-projects'),
+      Uri.parse('$base_url/tasks'),
       headers: headers,
       body: 'project_id: $projectId',
     );

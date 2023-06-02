@@ -122,6 +122,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        btnLogin.setEnabled(false);
         try{
             String email = txtEmail.getText();
             String pass = txtPass.getText();
@@ -138,6 +139,8 @@ public class Main extends javax.swing.JFrame {
         }catch(Exception e){
             e.printStackTrace();
             txtError.setText("Ha habido un problema con la aplicación.");
+        }finally{
+            btnLogin.setEnabled(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

@@ -75,6 +75,7 @@ public class App extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
         lblCompany = new javax.swing.JLabel();
+        btnChat = new javax.swing.JButton();
         jpRef = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRefAccept = new javax.swing.JButton();
@@ -165,6 +166,15 @@ public class App extends javax.swing.JFrame {
         jLabel2.setBounds(30, 560, 60, 20);
         jpApp.add(lblCompany);
         lblCompany.setBounds(90, 560, 130, 20);
+
+        btnChat.setText("Abrir Chat");
+        btnChat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChatActionPerformed(evt);
+            }
+        });
+        jpApp.add(btnChat);
+        btnChat.setBounds(620, 550, 110, 30);
 
         jpRef.setMinimumSize(new java.awt.Dimension(800, 600));
         jpRef.setLayout(null);
@@ -268,9 +278,8 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTareasActionPerformed
 
     private void btnOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionsActionPerformed
-        // TODO add your handling code here:        pnlOptions.setVisible(true);
-
-        
+        // TODO add your handling code here:        
+        pnlOptions.setVisible(true);
     }//GEN-LAST:event_btnOptionsActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -279,7 +288,6 @@ public class App extends javax.swing.JFrame {
 
     private void btnProjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectsActionPerformed
         List<Project> projects = gc.getProjects(logged);
-        
     }//GEN-LAST:event_btnProjectsActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -293,6 +301,12 @@ public class App extends javax.swing.JFrame {
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         pnlOptions.setVisible(true);
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void btnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatActionPerformed
+        String empresa = company.getName();
+        String topic = "gesty/" + empresa.toLowerCase().replace(' ', '-');
+        openChat(topic);
+    }//GEN-LAST:event_btnChatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,8 +374,15 @@ public class App extends javax.swing.JFrame {
     public void exitApp(){
         System.exit(0);
     }
+    
+    public void openChat(String topic){
+        Chat chat = new Chat(logged, topic);
+        chat.setLocationRelativeTo(null);
+        chat.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChat;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnOptions;
     private javax.swing.JButton btnProjects;

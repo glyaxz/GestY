@@ -6,7 +6,7 @@ import 'package:gesty/config/config.dart';
 class ProjectApiService {
   static Future<List<Project>> getProjects(int companyId) async {
     final response = await http.post(
-      Uri.parse('$base_url/get-projects'),
+      Uri.parse('$base_url/projects'),
       headers: headers,
       body: 'company_id: $companyId',
     );
