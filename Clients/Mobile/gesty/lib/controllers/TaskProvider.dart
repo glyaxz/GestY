@@ -7,8 +7,9 @@ class TaskProvider extends GetxController {
   late int projectId;
   bool _loading = false;
   bool get loading => _loading;
+  static int columns = 2;
   final RxList<Task> _tasks = <Task>[].obs;
-  List<Task> get projects => _tasks;
+  List<Task> get tasks => _tasks;
 
   void init(int projectid) {
     projectId = projectid;

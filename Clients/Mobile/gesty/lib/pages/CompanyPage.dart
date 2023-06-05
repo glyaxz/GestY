@@ -48,19 +48,46 @@ class _CompanyPageState extends State<CompanyPage> {
     return SizedBox(
       height: screenSize.height,
       width: screenSize.width,
-      child: Center(
-        child: ListView.builder(
-          itemCount: controller.companies.length,
-          scrollDirection: Axis.vertical,
-          padding: const EdgeInsets.only(bottom: 10),
-          itemBuilder: (context, index) =>
-              buildCompanyCard(controller.companies[index]),
+      child: GridView.builder(
+        scrollDirection: Axis.vertical,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: CompanyProvider
+              .columns, //<- esto es para cambiar el numero de columnas, pero si no le pones 2 y ya
+          mainAxisExtent: 310,
+          crossAxisSpacing: 10,
         ),
+        itemCount: Get.find<CompanyProvider>().companies.length,
+        itemBuilder: (context, index) => buildCompanyCard(
+            clickable: true,
+            company: Get.find<CompanyProvider>().companies[index]),
       ),
     );
   }
 
-  Widget buildCompanyCard(Company company) {
-    return Text(company.companyName!);
+  // Widget buildCompanyList() {
+  //   return SizedBox(
+  //     height: screenSize.height,
+  //     width: screenSize.width,
+  //     child: Center(
+  //       child: ListView.builder(
+  //         itemCount: controller.companies.length,
+  //         scrollDirection: Axis.vertical,
+  //         padding: const EdgeInsets.only(bottom: 10),
+  //         itemBuilder: (context, index) =>
+  //             buildCompanyCard(controller.companies[index]),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget buildCompanyCard({bool? clickable, required Company company}) {
+    return GestureDetector(
+      child: Text(company.companyName!),
+      onTap: () {
+        if (clickable ?? false) {
+          Get.toNamed('/projects', arguments: {'company': company});
+        }
+      },
+    );
   }
 }

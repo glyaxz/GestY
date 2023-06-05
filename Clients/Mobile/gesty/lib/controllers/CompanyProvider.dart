@@ -6,6 +6,7 @@ class CompanyProvider extends GetxController {
   //Es el punto medio entre el consumer y el servicio, el cual recoge del servicio y parsea la información
 
   bool _loading = false;
+  static int columns = 2;
   bool get loading => _loading;
   final RxList<Company> _companies = <Company>[].obs;
   List<Company> get companies => _companies;

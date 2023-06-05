@@ -16,6 +16,10 @@
             <id>Eclipse Paho Repo</id>
             <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
         </repository>
+        <repository>
+            <id>GeoTools Repo</id>
+            <url>https://repo.osgeo.org/repository/geotools-releases/</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
