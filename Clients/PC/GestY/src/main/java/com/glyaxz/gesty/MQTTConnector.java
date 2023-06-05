@@ -22,13 +22,14 @@ public class MQTTConnector {
     private boolean connected = false;
     private Empleado logged;
     private String password;
+    MemoryPersistence mp = new MemoryPersistence();
     private Chat chat;
     
     public MQTTConnector(Empleado logged, String password) {
         this.logged = logged;
         this.password = password;
         try {
-            mqttClient = new MqttClient("ssl://e7fa393ea4af4647a2482dffccd1d654.s2.eu.hivemq.cloud:8883", logged.getSessionId(), new MemoryPersistence());
+            mqttClient = new MqttClient("ssl://e7fa393ea4af4647a2482dffccd1d654.s2.eu.hivemq.cloud:8883", logged.getSessionId(), mp);
             MqttConnectionOptions options = new MqttConnectionOptions();
             options.setCleanStart(true);
             options.setUserName(logged.getEmail());

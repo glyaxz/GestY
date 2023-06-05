@@ -4,11 +4,22 @@
  */
 package com.glyaxz.gesty;
 
-import java.awt.Image;
+import java.awt.Button;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
@@ -32,6 +43,7 @@ public class App extends javax.swing.JFrame {
         app.checkRef();
         ico.setIcon(new ImageIcon("logo.png"));
         app.setIconImage(new ImageIcon("logo.png").getImage());
+        printTasksTable(null);
     }
 
     public App(Empleado logged, GestyConnector gc) {
@@ -55,6 +67,47 @@ public class App extends javax.swing.JFrame {
         // }
     }
 
+    MouseListener ml = new MouseListener() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2) {
+                System.out.println("double clicked");
+                int row = jtProjects.getSelectedRow();
+    
+                List<Project> projects = logged.getCompany().getProjects();
+                for (Project p : projects) {
+                    String value = String.valueOf(jtProjects.getValueAt(row, 0));
+                    if (p.getName().equals(value)) {
+                        jpProjects.setVisible(false);
+                        printTasksTable(p);
+                        jpTasks.setVisible(true);
+                        break; // Salir del bucle si se encuentra el proyecto correspondiente
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    };
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +126,12 @@ public class App extends javax.swing.JFrame {
         btnOptions = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jpProjects = new javax.swing.JPanel();
+        jspProjects = new javax.swing.JScrollPane();
+        jtProjects = new javax.swing.JTable();
+        jpTasks = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtTasks = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         lblCompany = new javax.swing.JLabel();
         btnChat = new javax.swing.JButton();
@@ -147,16 +206,74 @@ public class App extends javax.swing.JFrame {
         jpApp.add(btnExit);
         btnExit.setBounds(40, 440, 120, 40);
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
-        );
+        jpProjects.setLayout(null);
+
+        jspProjects.setBorder(null);
+        jspProjects.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jspProjects.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jtProjects.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Proyectos"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jspProjects.setViewportView(jtProjects);
+        if (jtProjects.getColumnModel().getColumnCount() > 0) {
+            jtProjects.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jpProjects.add(jspProjects);
+        jspProjects.setBounds(0, 0, 500, 450);
+
+        jLayeredPane1.add(jpProjects);
+        jpProjects.setBounds(0, 0, 506, 449);
+
+        jpTasks.setLayout(null);
+
+        jtTasks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Tarea", "Proyecto"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtTasks);
+        if (jtTasks.getColumnModel().getColumnCount() > 0) {
+            jtTasks.getColumnModel().getColumn(0).setResizable(false);
+            jtTasks.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jpTasks.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 0, 452, 402);
+
+        jLayeredPane1.add(jpTasks);
+        jpTasks.setBounds(0, 0, 510, 450);
 
         jpApp.add(jLayeredPane1);
         jLayeredPane1.setBounds(230, 80, 510, 450);
@@ -287,7 +404,30 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnProjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectsActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jtProjects.getModel();
+        for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
+            model.removeRow(i);
+        }
+        
         List<Project> projects = gc.getProjects(logged);
+        
+        for (Project p : projects) {
+            JLabel label = new JLabel(p.getName());
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("double clicked");
+                    int row = jtProjects.getSelectedRow();
+                    String projectName = (String) jtProjects.getValueAt(row, 0);
+
+                    // Realizar acciones con el nombre del proyecto seleccionado
+                }
+            });
+            TableCellRenderer renderer = new LabelTableCellRenderer();
+            jtProjects.getColumnModel().getColumn(0).setCellRenderer(renderer);
+            model.addRow(new JLabel[] { label });
+        }
+        
     }//GEN-LAST:event_btnProjectsActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -380,6 +520,30 @@ public class App extends javax.swing.JFrame {
         chat.setLocationRelativeTo(null);
         chat.setVisible(true);
     }
+    
+    public void printTasksTable(Project project){
+        DefaultTableModel model = (DefaultTableModel) jtTasks.getModel();
+        for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
+            model.removeRow(i);
+        }
+        
+        if(project == null){
+            List<Project> projects = logged.getCompany().getProjects();
+            projects.forEach(p -> {
+                List<Task> tasks = p.getTasks();
+                tasks.forEach(t -> {
+                    model.addRow(new Object[]{t.getName(), p.getName()});
+                });
+            });
+        }else{
+            List<Task> tasks = project.getTasks();
+            tasks.forEach(t -> {
+                model.addRow(new Object[]{t.getName(), project.getName()});
+            });
+        }
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChat;
@@ -398,9 +562,15 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpApp;
+    private javax.swing.JPanel jpProjects;
     private javax.swing.JPanel jpRef;
+    private javax.swing.JPanel jpTasks;
+    private javax.swing.JScrollPane jspProjects;
+    private javax.swing.JTable jtProjects;
+    private javax.swing.JTable jtTasks;
     private javax.swing.JLabel lblCompany;
     private javax.swing.JDialog pnlOptions;
     private javax.swing.JTextField txtRefUser;
