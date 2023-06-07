@@ -505,7 +505,7 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void btnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatActionPerformed
-        String empresa = company.getName();
+        String empresa = logged.getCompany().getName();
         topic = "gesty/" + empresa.toLowerCase().replace(' ', '-');
         openChat(topic);
     }//GEN-LAST:event_btnChatActionPerformed
