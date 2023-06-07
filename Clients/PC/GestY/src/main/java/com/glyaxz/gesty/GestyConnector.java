@@ -23,7 +23,11 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import java.util.Map;
 /**
  *
  * @author Javier Garcia
@@ -265,7 +269,7 @@ public class GestyConnector {
             HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-projects");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
-
+            
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("company_id", logged.getCompanyId()));
             request.setEntity(new UrlEncodedFormEntity(params));
@@ -282,7 +286,6 @@ public class GestyConnector {
                         response.close();
                         List<Project> projects = new ArrayList<Project>();
                         list.forEach(p -> projects.add(new Project(p.getAsJsonObject(), logged)));
-                        logged.getCompany().setProjects(projects);
                         return projects;          
                     }else{
                         httpClient.close();
@@ -307,14 +310,14 @@ public class GestyConnector {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-projects");
+            HttpPost request = new HttpPost("https://gesty.devf6.es/api/get-tasks");
             request.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0");
             request.setHeader("Authorization", token);
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("project_id", String.valueOf(project.getId())));
             request.setEntity(new UrlEncodedFormEntity(params));
-
+            
             CloseableHttpResponse response = httpClient.execute(request);
             try {
                 HttpEntity entity = response.getEntity();
@@ -322,13 +325,36 @@ public class GestyConnector {
                     String result = EntityUtils.toString(entity);
                     if(!result.equals("")){
                         Gson gson = new Gson(); 
-                        JsonArray list = gson.fromJson(result, JsonArray.class);
-                        httpClient.close();
-                        response.close();
-                        List<Task> tasks = new ArrayList<Task>();
-                        list.forEach(p -> tasks.add(new Task(p.getAsJsonObject(), project)));
-                        project.setTasks(tasks);
-                        return tasks;          
+                        try{
+                            JsonArray list = gson.fromJson(result, JsonArray.class);
+                            httpClient.close();
+                            response.close();
+                            List<Task> tasks = new ArrayList<Task>();
+                            list.forEach(p -> tasks.add(new Task(p.getAsJsonObject(), project)));
+                            return tasks;
+                        } catch(JsonSyntaxException e){
+                            JsonParser parser = new JsonParser();
+                            JsonElement jsonElement = parser.parse(result);
+                            JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+                            List<Task> tasks = new ArrayList<>();
+
+                            for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+                                JsonObject taskObject = entry.getValue().getAsJsonObject();
+                                Task task = new Task(taskObject, project);
+                                tasks.add(task);
+                            }
+                            return tasks;
+                                                        /*
+                            JsonObject obj = gson.fromJson(result, JsonObject.class);
+                            httpClient.close();
+                            response.close();
+                            List<Task> tasks = new ArrayList<Task>();
+                            System.out.println();
+                            tasks.add(new Task(obj, project));
+                            return tasks;
+                            */
+                        }         
                     }else{
                         httpClient.close();
                         response.close();

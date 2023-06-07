@@ -25,7 +25,7 @@ public class Task {
     public Task(JsonObject json, Project project){
         this.name = json.get("task_name").getAsString();
         this.description = json.get("task_desc").getAsString();
-        this.id = json.get("id").getAsInt();
+        this.id = json.get("task_id").getAsInt();
         this.project = project;
     }
 

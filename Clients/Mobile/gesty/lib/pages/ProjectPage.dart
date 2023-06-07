@@ -15,11 +15,17 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> {
   Company company = Get.arguments['company'];
   late Size screenSize;
-  late ProjectProvider controller;
+  ProjectProvider controller = ProjectProvider();
+
+  @override
+  void initState() {
+    controller.getProjects(company.companyId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    screenSize = MediaQuery.of(context).size;
+    // screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Empresas')),
@@ -29,11 +35,10 @@ class _ProjectPageState extends State<ProjectPage> {
 
   Widget buildProjectPage() {
     return GetBuilder<ProjectProvider>(
-      init: ProjectProvider(),
+      // init: ProjectProvider(),
       builder: (controller) {
-        controller.getProjects(company.companyId);
         if (controller.loading) {
-          this.controller = controller;
+          // this.controller = controller;
           return SizedBox(
             height: screenSize.height,
             width: screenSize.width,
@@ -42,6 +47,7 @@ class _ProjectPageState extends State<ProjectPage> {
             ),
           );
         } else {
+          this.controller = controller;
           return buildProjectList();
         }
       },
@@ -49,23 +55,21 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Widget buildProjectList() {
-    return Expanded(
-      child: SizedBox(
-        height: screenSize.height,
-        width: screenSize.width,
-        child: GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: ProjectProvider
-                .columns, //<- esto es para cambiar el numero de columnas, pero si no le pones 2 y ya
-            mainAxisExtent: 310,
-            crossAxisSpacing: 10,
-          ),
-          itemCount: Get.find<ProjectProvider>().projects.length,
-          itemBuilder: (context, index) => buildProjectCard(
-              clickable: true,
-              project: Get.find<ProjectProvider>().projects[index]),
+    return SizedBox(
+      height: screenSize.height,
+      width: screenSize.width,
+      child: GridView.builder(
+        scrollDirection: Axis.vertical,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: ProjectProvider
+              .columns, //<- esto es para cambiar el numero de columnas, pero si no le pones 2 y ya
+          mainAxisExtent: 310,
+          crossAxisSpacing: 10,
         ),
+        itemCount: Get.find<ProjectProvider>().projects.length,
+        itemBuilder: (context, index) => buildProjectCard(
+            clickable: true,
+            project: Get.find<ProjectProvider>().projects[index]),
       ),
     );
   }

@@ -6,6 +6,8 @@ package com.glyaxz.gesty;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.List;
+import javax.swing.JDialog;
 
 /**
  *
@@ -57,5 +59,31 @@ public class Empleado extends User{
 
     public void setCompany(){
         this.company = gc.getCompany(this);
+    }
+    
+    public void setProjects(){
+        List<Project> projects = gc.getProjects(this);
+        this.company.setProjects(projects);
+        
+    }
+    public List<Project> getProjects(){
+        return this.company.getProjects();
+    }
+    
+    public Project getProjectFromName(String param){
+        Project[] valid = new Project[1];
+        List<Project> projects = company.getProjects();
+        projects.forEach(p -> {
+            if(p.getName().equals(param)){ valid[0] = p; }
+        });
+        return valid[0];
+    }
+    
+    public Task getTaskFromName(String param, String projectName){
+        Task task;
+        Project p = getProjectFromName(projectName);
+        List<Task> tasks = p.getTasks();
+        task = tasks.stream().filter(t -> t.getName() == param).findAny().get();
+        return task;
     }
 }

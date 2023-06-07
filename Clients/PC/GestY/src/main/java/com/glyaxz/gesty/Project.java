@@ -7,6 +7,7 @@ package com.glyaxz.gesty;
 import java.util.List;
 
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,13 +25,16 @@ public class Project {
         this.id = id;
         this.company = company;
         this.gc = new GestyConnector();
+        tasks = new ArrayList<>();
     }
 
     public Project(JsonObject json, Empleado logged){
         this.gc = new GestyConnector();
         this.name = json.get("project_name").getAsString();
-        this.id = json.get("id").getAsInt();
+        this.id = json.get("project_id").getAsInt();
         this.company = logged.getCompany();
+        tasks = new ArrayList<>();
+
     }
 
     public void setName(String name){
@@ -54,7 +58,11 @@ public class Project {
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
     }
-    public List<Task> getTasks(){
+    public List<Task> getTasks(Empleado logged){
+        this.tasks = gc.getTasks(this, logged);
         return tasks;
+    }
+    public List<Task> getTasks(){
+        return this.tasks;
     }
 }

@@ -4,10 +4,6 @@
  */
 package com.glyaxz.gesty;
 
-import java.awt.Component;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 /**
  *
  * @author bokax

@@ -5,14 +5,12 @@
 package com.glyaxz.gesty;
 
 import java.util.List;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.eclipse.paho.mqttv5.common.packet.UserProperty;
 
 /**
@@ -32,6 +30,8 @@ public class Chat extends javax.swing.JFrame {
         this.topic = topic;
         initComponents();
         txtEmail.setText("Hola, " + logged.getEmail());
+        this.setTitle("GestY Chat");
+        this.setIconImage(new ImageIcon("logo.png").getImage());
         jpLogin.setVisible(true);
         jpChat.setVisible(false);
     }

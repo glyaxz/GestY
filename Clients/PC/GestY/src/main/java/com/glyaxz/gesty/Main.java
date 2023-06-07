@@ -6,6 +6,7 @@ package com.glyaxz.gesty;
 
 import java.awt.Desktop;
 import java.net.URI;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 import mdlaf.MaterialLookAndFeel;
@@ -30,6 +31,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         gc = new GestyConnector();
         initComponents();
+        this.setTitle("GestY");
+        this.setIconImage(new ImageIcon("logo.png").getImage());
         txtError.setText("");
         setLocationRelativeTo(null);
     }
