@@ -51,25 +51,4 @@ class User extends Authenticatable
         return $this->hasOne(Empleado::class);
 
     }
-    public function getEmpleado(){
-        $f = Fichaje::query()->get()->where('empleado_id', $this->empleado_id)->first()->getModel();
-        return $f->empleado();
-    }
-
-    public function desfichar(){
-        $empleado = $this->empleado()->getParent()->getAttribute('empleado_id');
-        $fichaje = Fichaje::query()->get(['empleado_id', 'id', 'salida'])->where('empleado_id', $empleado)->last() ;
-
-        try {
-            return $fichaje->getAttribute('salida') == null;
-        } catch (\Throwable $th) {
-            return false;
-        }
-    }
-
-    public static function lastfichaje(Empleado $e){
-        $fichaje = Fichaje::query()->get()->where('empleado_id', $e->id)->last();
-
-        return $fichaje->id;
-    }
 }

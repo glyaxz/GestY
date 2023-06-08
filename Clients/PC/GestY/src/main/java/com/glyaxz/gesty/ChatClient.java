@@ -5,7 +5,7 @@
 package com.glyaxz.gesty;
 
 /**
- *
+ * 
  * @author Javier Garcia
  */
 public class ChatClient {
