@@ -15,7 +15,7 @@ import org.eclipse.paho.mqttv5.common.packet.UserProperty;
 
 /**
  *
- * @author bokax
+ * @author Javier Garcia
  */
 public class Chat extends javax.swing.JFrame {
     Empleado logged;
