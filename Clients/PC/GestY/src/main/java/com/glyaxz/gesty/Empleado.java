@@ -72,8 +72,8 @@ public class Empleado extends User{
     
     /**
      * Get a specific project using project name as parameter
-     * @param param
-     * @return 
+     * @param param projectName
+     * @return project
      */
     public Project getProjectFromName(String param){
         Project[] valid = new Project[1];
@@ -86,8 +86,8 @@ public class Empleado extends User{
     
     /**
      * Get a specific task using task name and project name
-     * @param param
-     * @param projectName
+     * @param param taskName
+     * @param projectName projectName
      * @return 
      */
     public Task getTaskFromName(String param, String projectName){

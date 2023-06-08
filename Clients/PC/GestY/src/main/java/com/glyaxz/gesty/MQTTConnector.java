@@ -98,9 +98,9 @@ public class MQTTConnector {
 
     /**
      * Connect to a MQTT topic 
-     * @param topic
-     * @param listener
-     * @return 
+     * @param topic topic
+     * @param listener listener
+     * @return boolean
      */
     public boolean subscribeToTopic(String topic, IMqttMessageListener listener) {
         try {
@@ -114,8 +114,8 @@ public class MQTTConnector {
 
     /**
      * Public a message into a topic
-     * @param topic
-     * @param message 
+     * @param topic topic
+     * @param message message
      */
     public void publishMessage(String topic, String message) {
         try {
@@ -145,7 +145,7 @@ public class MQTTConnector {
     
     /**
      * Return if user is connected to MQTT server
-     * @return 
+     * @return connected
      */
     public boolean connected(){
         return this.connected;
@@ -153,7 +153,7 @@ public class MQTTConnector {
     
     /**
      * Set a Chat instance
-     * @param chat 
+     * @param chat chat
      */
     public void setChatPanel(Chat chat){
         this.chat = chat;

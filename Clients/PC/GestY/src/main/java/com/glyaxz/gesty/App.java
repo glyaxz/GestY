@@ -45,8 +45,8 @@ public class App extends javax.swing.JFrame {
 
     /**
      * Create new App 
-     * @param logged
-     * @param gc 
+     * @param logged logged
+     * @param gc gestyConnector
      */
     public App(Empleado logged, GestyConnector gc) {
         app = this;
@@ -566,7 +566,7 @@ public class App extends javax.swing.JFrame {
 
     /**
      * Set a new employee
-     * @param logged 
+     * @param logged logged
      */
     public void setLogged(Empleado logged){
         this.logged = logged;
@@ -574,7 +574,7 @@ public class App extends javax.swing.JFrame {
     
     /**
      * Get the logged employee
-     * @return 
+     * @return employee
      */
     public Empleado getLogged(){
         return this.logged;
@@ -582,7 +582,7 @@ public class App extends javax.swing.JFrame {
     
     /**
      * Get App's GestyConnector instance
-     * @return 
+     * @return gestyConnector
      */
     public GestyConnector getConnector(){
         return this.gc;
@@ -590,7 +590,7 @@ public class App extends javax.swing.JFrame {
     
     /**
      * Set a GestyConnector instance
-     * @param gc 
+     * @param gc gestyConnector
      */
     public void setConnector(GestyConnector gc){
         this.gc = gc;
@@ -641,7 +641,7 @@ public class App extends javax.swing.JFrame {
     
     /**
      * Open a chat panel
-     * @param topic 
+     * @param topic topic
      */
     public void openChat(String topic){
         Chat chat = new Chat(logged, topic);
@@ -651,7 +651,7 @@ public class App extends javax.swing.JFrame {
     
     /**
      * Update Task table only with project's tasks
-     * @param project 
+     * @param project project
      */
     public void printTasksTable(Project project){
         DefaultTableModel model = (DefaultTableModel) jtTasks.getModel();

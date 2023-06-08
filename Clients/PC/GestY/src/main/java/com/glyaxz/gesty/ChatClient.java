@@ -32,7 +32,7 @@ public class ChatClient {
 
     /**
      * Send a message into a topic
-     * @param message 
+     * @param message message 
      */
     public void sendMessage(String message) {
         mqttClient.publishMessage(topic, message);
@@ -78,7 +78,7 @@ public class ChatClient {
     
     /**
      * Return if logged employee is connected to MQTT chat 
-     * @return 
+     * @return connected
      */
     public boolean connected(){
         return this.connected;
@@ -86,7 +86,7 @@ public class ChatClient {
     
     /**
      * Get a MQTTConnector instance from this
-     * @return 
+     * @return mqttConnector
      */
     public MQTTConnector getMqttConnector(){
         return this.mqttClient;

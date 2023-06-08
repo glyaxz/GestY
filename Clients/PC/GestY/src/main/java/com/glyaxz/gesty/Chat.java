@@ -214,9 +214,9 @@ public class Chat extends javax.swing.JFrame {
     // MQTT Client Functions 
     /**
      * Get a chat client instance
-     * @param logged
-     * @param password
-     * @return 
+     * @param logged logged
+     * @param password password
+     * @return chatClient
      */
     public ChatClient openChat(Empleado logged, String password){
         ChatClient cc = new ChatClient(logged, password,this.topic, this);
@@ -238,7 +238,7 @@ public class Chat extends javax.swing.JFrame {
     
     /**
      * Print into chat table a employee message
-     * @param message 
+     * @param message message
      */
     public void printOwnMessageOnChat(String message){
         mqttClient.publishMessage(topic, message);
@@ -248,8 +248,8 @@ public class Chat extends javax.swing.JFrame {
     
     /**
      * Print into chat table a received message
-     * @param message
-     * @param chat 
+     * @param message message
+     * @param chat chat
      */
     public static void printRemoteMessageOnChat(MqttMessage message, Chat chat){
         List<UserProperty> props = message.getProperties().getUserProperties();

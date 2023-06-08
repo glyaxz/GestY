@@ -22,9 +22,9 @@ public class Company {
 
     /**
      * Create new company
-     * @param id
-     * @param name
-     * @param companyRef 
+     * @param id id
+     * @param name name
+     * @param companyRef conpanyRef
      */
     public Company(int id, String name, String companyRef){
         gc = new GestyConnector();
@@ -36,7 +36,7 @@ public class Company {
 
     /**
      * Create a new company from JsonObject
-     * @param json 
+     * @param json json
      */
     public Company(JsonObject json){
         gc = new GestyConnector();
@@ -49,21 +49,21 @@ public class Company {
     //Getters & Setters
     /**
      * Set a new company name
-     * @param name 
+     * @param name name
      */
     public void setName(String name){
         this.name = name;
     }
     /**
      * Get company's name
-     * @return 
+     * @return name
      */
     public String getName(){
         return this.name;
     }
     /**
      * Set a new company reference
-     * @param companyRef 
+     * @param companyRef companyRef
      */
     public void setCompanyRef(String companyRef){
         this.companyRef = companyRef;
@@ -71,7 +71,7 @@ public class Company {
     
     /**
      * Get company's reference
-     * @return String
+     * @return String companyRef
      */
     public String getCompanyRef(){
         return this.companyRef;
@@ -79,7 +79,7 @@ public class Company {
     
     /**
      * Set a new company ID
-     * @param id 
+     * @param id  id
      */
     public void setId(int id){
         this.id = id;
@@ -87,7 +87,7 @@ public class Company {
     
     /**
      * Get company's ID
-     * @return 
+     * @return id
      */
     public int getId(){
         return this.id;
@@ -95,7 +95,7 @@ public class Company {
     
     /**
      * Get all projects from company
-     * @return List<Project>
+     * @return projects
      */
     public List<Project> getProjects(){
         return this.projects;
@@ -103,7 +103,7 @@ public class Company {
 
     /**
      * Set a new project's list 
-     * @param projects 
+     * @param projects projects
      */
     public void setProjects(List<Project> projects){
         this.projects = projects;
