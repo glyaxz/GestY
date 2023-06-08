@@ -212,6 +212,12 @@ public class Chat extends javax.swing.JFrame {
     }
     
     // MQTT Client Functions 
+    /**
+     * Get a chat client instance
+     * @param logged
+     * @param password
+     * @return 
+     */
     public ChatClient openChat(Empleado logged, String password){
         ChatClient cc = new ChatClient(logged, password,this.topic, this);
         this.cc = cc;
@@ -220,6 +226,9 @@ public class Chat extends javax.swing.JFrame {
         return cc;
     }
     
+    /**
+     *  Clean chat table
+     */
     public void printChat(){
         DefaultTableModel model = (DefaultTableModel) jtChat.getModel();
         for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
@@ -227,12 +236,21 @@ public class Chat extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Print into chat table a employee message
+     * @param message 
+     */
     public void printOwnMessageOnChat(String message){
         mqttClient.publishMessage(topic, message);
         DefaultTableModel model = (DefaultTableModel) jtChat.getModel();
         model.addRow(new Object[]{"Tú -> " + message});
     }
     
+    /**
+     * Print into chat table a received message
+     * @param message
+     * @param chat 
+     */
     public static void printRemoteMessageOnChat(MqttMessage message, Chat chat){
         List<UserProperty> props = message.getProperties().getUserProperties();
         

@@ -7,20 +7,9 @@ class TaskProvider extends GetxController {
   late int projectId;
   bool _loading = false;
   bool get loading => _loading;
-  static int columns = 2;
+  static int columns = 1;
   final RxList<Task> _tasks = <Task>[].obs;
   List<Task> get tasks => _tasks;
-
-  void init(int projectid) {
-    projectId = projectid;
-    onInit();
-  }
-
-  @override
-  void onInit() {
-    getTasks(projectId);
-    super.onInit();
-  }
 
   void changeLoading(bool newState) {
     _loading = newState;
@@ -35,8 +24,8 @@ class TaskProvider extends GetxController {
 
   Future<void> getTasks(projectId) async {
     changeLoading(true);
-    List<Task> aux = await TaskApiService.getTasks(projectId);
-    setTasks(aux);
+    List<Task>? aux = await TaskApiService.getTasks(projectId);
+    aux == null ? null : setTasks(aux);
     changeLoading(false);
     update();
   }

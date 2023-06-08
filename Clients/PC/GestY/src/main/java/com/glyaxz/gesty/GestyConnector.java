@@ -41,6 +41,12 @@ public class GestyConnector {
     private String sessionId = "";
     Empleado logged = null;
 
+    /**
+     * Function who verifies if employee logged is registered on server. If employee is valid, return a Empleado instance, otherwise a null Empleado
+     * @param email
+     * @param password
+     * @return 
+     */
     public Empleado login(String email, String password) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -86,10 +92,20 @@ public class GestyConnector {
         }
     }
     
+    /**
+     * Return the user logged
+     * @return 
+     */
     public Empleado getUserLogged(){
         return logged;
     }
 
+    /**
+     * Function who verified if a company reference exists. If company reference exists, return company name, otherwise return null.
+     * @param companyRef
+     * @param sessionId
+     * @return 
+     */
     public String checkRef(String companyRef, String sessionId) {
         String isValid = null;
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -132,6 +148,11 @@ public class GestyConnector {
         }
     }
 
+    /**
+     * Verifies if employee has a company reference setted. If is setted, set it to employee instance and return true, otherwise return false;
+     * @param empleado
+     * @return 
+     */
     public boolean hasRef(Empleado empleado){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -178,6 +199,12 @@ public class GestyConnector {
         }
     }
 
+    /**
+     * Set a company reference to a employee on GestY Server
+     * @param logged
+     * @param ref
+     * @return 
+     */
     public boolean setUserRef(Empleado logged, String ref){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -220,6 +247,11 @@ public class GestyConnector {
         return false;
     }
 
+    /**
+     * Returns the company the user belongs to
+     * @param logged
+     * @return 
+     */
     public Company getCompany(Empleado logged){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -262,6 +294,11 @@ public class GestyConnector {
         return null;
     }
 
+    /**
+     * Get a project list from the company the user belong to
+     * @param logged
+     * @return 
+     */
     public List<Project> getProjects(Empleado logged){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -306,6 +343,12 @@ public class GestyConnector {
         return null;
     }
 
+    /**
+     * Get a task list assigned to user into a project
+     * @param project
+     * @param logged
+     * @return 
+     */
     public List<Task> getTasks(Project project, Empleado logged){
         CloseableHttpClient httpClient = HttpClients.createDefault();
 

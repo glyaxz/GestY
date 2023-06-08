@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author bokax
+ * @author Javier Garcia
  */
 
 public class LabelTableCellRenderer extends DefaultTableCellRenderer {

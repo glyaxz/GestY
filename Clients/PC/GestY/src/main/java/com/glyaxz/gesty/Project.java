@@ -58,9 +58,15 @@ public class Project {
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
     }
+    
+    /**
+     * Get a task list from assigned in this project
+     * @param logged
+     * @return 
+     */
     public List<Task> getTasks(Empleado logged){
         this.tasks = gc.getTasks(this, logged);
-        return tasks;
+        return this.tasks;
     }
     public List<Task> getTasks(){
         return this.tasks;

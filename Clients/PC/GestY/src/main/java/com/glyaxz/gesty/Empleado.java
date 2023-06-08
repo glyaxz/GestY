@@ -70,6 +70,11 @@ public class Empleado extends User{
         return this.company.getProjects();
     }
     
+    /**
+     * Get a specific project using project name as parameter
+     * @param param
+     * @return 
+     */
     public Project getProjectFromName(String param){
         Project[] valid = new Project[1];
         List<Project> projects = company.getProjects();
@@ -79,6 +84,12 @@ public class Empleado extends User{
         return valid[0];
     }
     
+    /**
+     * Get a specific task using task name and project name
+     * @param param
+     * @param projectName
+     * @return 
+     */
     public Task getTaskFromName(String param, String projectName){
         Task task;
         Project p = getProjectFromName(projectName);

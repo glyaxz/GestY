@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -32,7 +31,7 @@ public class App extends javax.swing.JFrame {
     String topic;
     
     /**
-     * Creates new form App
+     * Create new App
      */
     public App() {
         initComponents();
@@ -44,6 +43,11 @@ public class App extends javax.swing.JFrame {
         printTasksTable();
     }
 
+    /**
+     * Create new App 
+     * @param logged
+     * @param gc 
+     */
     public App(Empleado logged, GestyConnector gc) {
         app = this;
         this.logged = logged;
@@ -91,6 +95,7 @@ public class App extends javax.swing.JFrame {
         @Override
         public void mouseExited(MouseEvent e) { /**/ }
     };
+    
     MouseListener mlt = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -559,18 +564,41 @@ public class App extends javax.swing.JFrame {
         
     }
 
+    /**
+     * Set a new employee
+     * @param logged 
+     */
     public void setLogged(Empleado logged){
         this.logged = logged;
     }
+    
+    /**
+     * Get the logged employee
+     * @return 
+     */
     public Empleado getLogged(){
         return this.logged;
     }
+    
+    /**
+     * Get App's GestyConnector instance
+     * @return 
+     */
     public GestyConnector getConnector(){
         return this.gc;
     }
+    
+    /**
+     * Set a GestyConnector instance
+     * @param gc 
+     */
     public void setConnector(GestyConnector gc){
         this.gc = gc;
     }
+    
+    /**
+     * Check if logged employee has a valid company reference
+     */
     public void checkRef(){
         if(gc.hasRef(this.logged)){
             app.jpApp.setVisible(true);
@@ -580,7 +608,10 @@ public class App extends javax.swing.JFrame {
             app.jpRef.setVisible(true);
         }
     }
-
+    
+    /**
+     * Reload App
+     */
     public void reloadApp(){
         Thread wait = new Thread( () -> {
             try{
@@ -592,21 +623,36 @@ public class App extends javax.swing.JFrame {
         wait.run();
         System.out.println("DEBUG: " + "WIP -> FUNCTION TO UPDATE APP WHEN UPDATE COMPANY_REF");
     }
+    
+    /**
+     * Load app
+     */
     public void loadApp(){
         jpRef.setVisible(false);
         jpApp.setVisible(true);
     }
     
+    /**
+     * Close the app
+     */
     public void exitApp(){
         System.exit(0);
     }
     
+    /**
+     * Open a chat panel
+     * @param topic 
+     */
     public void openChat(String topic){
         Chat chat = new Chat(logged, topic);
         chat.setLocationRelativeTo(null);
         chat.setVisible(true);
     }
     
+    /**
+     * Update Task table only with project's tasks
+     * @param project 
+     */
     public void printTasksTable(Project project){
         DefaultTableModel model = (DefaultTableModel) jtTasks.getModel();
         for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
@@ -622,6 +668,9 @@ public class App extends javax.swing.JFrame {
 
     }
     
+    /**
+     * Update task table with all employee task 
+     */
     public void printTasksTable(){
         List<Project> projects = logged.getProjects();
         DefaultTableModel model = (DefaultTableModel) jtTasks.getModel();
@@ -645,7 +694,10 @@ public class App extends javax.swing.JFrame {
         jpProjects.setVisible(false);
         jpTasks.setVisible(true);
     }
-
+    
+    /**
+     * Load all data from server
+     */
     public void getData(){
         boolean loading = false;
         Empleado emp = this.logged;
@@ -670,6 +722,9 @@ public class App extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Function to update data while the application is open
+     */
     public void reloadData(){
         Thread t = new Thread( () -> {
             while(true){
@@ -686,6 +741,9 @@ public class App extends javax.swing.JFrame {
         t.start();
     }
     
+    /**
+     * Update all tasks from employee's projects
+     */
     public void updateTaskTable(){
         List<Project> projects = logged.getProjects();
         DefaultTableModel model = (DefaultTableModel) jtTasks.getModel();
@@ -710,6 +768,9 @@ public class App extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Update all projects from projects table
+     */
     public void updateProjectsTable(){
         List<Project> projects = gc.getProjects(logged);
         DefaultTableModel model = (DefaultTableModel) jtProjects.getModel();

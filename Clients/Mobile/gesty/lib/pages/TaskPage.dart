@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gesty/controllers/TaskProvider.dart';
-import 'package:gesty/models/Company.dart';
+import 'package:gesty/models/Project.dart';
 import 'package:gesty/models/Task.dart';
 import 'package:gesty/resources/custom_loading_page.dart';
 import 'package:get/get.dart';
@@ -13,24 +13,30 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  Company company = Get.arguments['company'];
+  Project project = Get.arguments;
   late Size screenSize;
-  TaskProvider controller = Get.find<TaskProvider>();
+  TaskProvider controller = TaskProvider();
+
+  @override
+  void initState() {
+    controller.getTasks(int.parse(project.projectId));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Empresas')),
+      appBar: AppBar(title: const Text('Tareas')),
       body: buildTaskPage(),
     );
   }
 
   Widget buildTaskPage() {
     return GetBuilder<TaskProvider>(
-      init: TaskProvider(),
-      builder: (controller) {
+      init: controller,
+      builder: (cont) {
         if (controller.loading) {
           return SizedBox(
             height: screenSize.height,
@@ -47,22 +53,20 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   Widget buildTaskList() {
-    return Expanded(
-      child: SizedBox(
-        height: screenSize.height,
-        width: screenSize.width,
-        child: GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: TaskProvider
-                .columns, //<- esto es para cambiar el numero de columnas, pero si no le pones 2 y ya
-            mainAxisExtent: 310,
-            crossAxisSpacing: 10,
-          ),
-          itemCount: Get.find<TaskProvider>().tasks.length,
-          itemBuilder: (context, index) =>
-              buildTaskCard(task: Get.find<TaskProvider>().tasks[index]),
+    return SizedBox(
+      height: screenSize.height,
+      width: screenSize.width,
+      child: GridView.builder(
+        scrollDirection: Axis.vertical,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: TaskProvider
+              .columns, //<- esto es para cambiar el numero de columnas, pero si no le pones 2 y ya
+          mainAxisExtent: 310,
+          crossAxisSpacing: 10,
         ),
+        itemCount: Get.find<TaskProvider>().tasks.length,
+        itemBuilder: (context, index) =>
+            buildTaskCard(task: Get.find<TaskProvider>().tasks[index]),
       ),
     );
   }

@@ -30,15 +30,24 @@ public class ChatClient {
         }
     }
 
+    /**
+     * Send a message into a topic
+     * @param message 
+     */
     public void sendMessage(String message) {
         mqttClient.publishMessage(topic, message);
     }
 
+    /**
+     * Disconnect from MQTT client
+     */
     public void disconnect() {
         mqttClient.disconnect();
     }
     
-    
+    /**
+     * Function for receive messages while chat is open
+     */
     public void receiveMessages() {
         Thread t = new Thread( () -> {
             boolean connected = true;
@@ -67,10 +76,18 @@ public class ChatClient {
         t.start();
     }
     
+    /**
+     * Return if logged employee is connected to MQTT chat 
+     * @return 
+     */
     public boolean connected(){
         return this.connected;
     }
     
+    /**
+     * Get a MQTTConnector instance from this
+     * @return 
+     */
     public MQTTConnector getMqttConnector(){
         return this.mqttClient;
     }

@@ -19,13 +19,13 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   void initState() {
-    controller.getProjects(company.companyId);
+    controller.getProjects(int.parse(company.companyId!));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // screenSize = MediaQuery.of(context).size;
+    screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Empresas')),
@@ -35,8 +35,8 @@ class _ProjectPageState extends State<ProjectPage> {
 
   Widget buildProjectPage() {
     return GetBuilder<ProjectProvider>(
-      // init: ProjectProvider(),
-      builder: (controller) {
+      init: controller,
+      builder: (cont) {
         if (controller.loading) {
           // this.controller = controller;
           return SizedBox(
@@ -47,7 +47,6 @@ class _ProjectPageState extends State<ProjectPage> {
             ),
           );
         } else {
-          this.controller = controller;
           return buildProjectList();
         }
       },
@@ -55,6 +54,8 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Widget buildProjectList() {
+    print(Get.find<ProjectProvider>().projects.length);
+
     return SizedBox(
       height: screenSize.height,
       width: screenSize.width,

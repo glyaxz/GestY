@@ -20,6 +20,12 @@ public class Company {
     private int id;
     private List<Project> projects;
 
+    /**
+     * Create new company
+     * @param id
+     * @param name
+     * @param companyRef 
+     */
     public Company(int id, String name, String companyRef){
         gc = new GestyConnector();
         this.id = id;
@@ -28,6 +34,10 @@ public class Company {
         projects = new ArrayList<>();
     }
 
+    /**
+     * Create a new company from JsonObject
+     * @param json 
+     */
     public Company(JsonObject json){
         gc = new GestyConnector();
         id = json.get("id").getAsInt();
@@ -37,31 +47,66 @@ public class Company {
     }
 
     //Getters & Setters
+    /**
+     * Set a new company name
+     * @param name 
+     */
     public void setName(String name){
         this.name = name;
     }
+    /**
+     * Get company's name
+     * @return 
+     */
     public String getName(){
         return this.name;
     }
+    /**
+     * Set a new company reference
+     * @param companyRef 
+     */
     public void setCompanyRef(String companyRef){
         this.companyRef = companyRef;
     }
+    
+    /**
+     * Get company's reference
+     * @return String
+     */
     public String getCompanyRef(){
         return this.companyRef;
     }
+    
+    /**
+     * Set a new company ID
+     * @param id 
+     */
     public void setId(int id){
         this.id = id;
     }
+    
+    /**
+     * Get company's ID
+     * @return 
+     */
     public int getId(){
         return this.id;
     }
+    
+    /**
+     * Get all projects from company
+     * @return List<Project>
+     */
     public List<Project> getProjects(){
         return this.projects;
     }
 
+    /**
+     * Set a new project's list 
+     * @param projects 
+     */
     public void setProjects(List<Project> projects){
         this.projects = projects;
-        
     }
     
     

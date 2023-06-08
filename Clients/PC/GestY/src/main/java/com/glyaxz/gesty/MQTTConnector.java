@@ -36,11 +36,14 @@ public class MQTTConnector {
             options.setPassword(password.getBytes());
             
             mqttClient.setCallback(new MqttCallback() {
+                /**
+                 * Function to be launched when the connection to the MQTT client is lost.
+                 */
                 public void connectionLost(Throwable cause) {
                     System.out.println("Lost connection");
                     cause.printStackTrace(); //EOFException thrown here within a few seconds
                 }
-
+                
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     System.out.println("Ha llegado un mensaje: " + message.toString());
@@ -93,6 +96,12 @@ public class MQTTConnector {
         }
     }
 
+    /**
+     * Connect to a MQTT topic 
+     * @param topic
+     * @param listener
+     * @return 
+     */
     public boolean subscribeToTopic(String topic, IMqttMessageListener listener) {
         try {
             mqttClient.subscribe(topic, 1);
@@ -103,6 +112,11 @@ public class MQTTConnector {
         }
     }
 
+    /**
+     * Public a message into a topic
+     * @param topic
+     * @param message 
+     */
     public void publishMessage(String topic, String message) {
         try {
             MqttMessage mqttMessage = new MqttMessage(message.getBytes());
@@ -118,6 +132,9 @@ public class MQTTConnector {
         }
     }
 
+    /**
+     * Disconnect from MQTT client
+     */
     public void disconnect() {
         try {
             mqttClient.disconnect();
@@ -126,10 +143,18 @@ public class MQTTConnector {
         }
     }
     
+    /**
+     * Return if user is connected to MQTT server
+     * @return 
+     */
     public boolean connected(){
         return this.connected;
     }
     
+    /**
+     * Set a Chat instance
+     * @param chat 
+     */
     public void setChatPanel(Chat chat){
         this.chat = chat;
     }
