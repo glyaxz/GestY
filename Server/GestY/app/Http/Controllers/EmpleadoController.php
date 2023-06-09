@@ -11,10 +11,8 @@ class EmpleadoController extends Controller
 {
     public function index(int $companyId)
     {
-        $all = Empleado::all();
         $empleados = Empleado::query()->get()->where('company_id', $companyId);
         echo view('dashboard.companies.empleados.index', compact('companyId', 'empleados'));
-
     }
 
     public function create()
@@ -45,24 +43,5 @@ class EmpleadoController extends Controller
     public function destroy(Empleado $empleado)
     {
         //
-    }
-
-    public function getpdf(){
-        $empleados = Empleado::get();
-        $pdf = Pdf::loadView('dashboard.empleados.pdf', compact('empleados'));
-        return $pdf->download('empleados_'.date('d-m-y'));
-    }
-
-    public function streampdf(){
-        $empleados = Empleado::get();
-        $pdf = Pdf::loadView('dashboard.empleados.pdf', compact('empleados'));
-        return $pdf->stream();
-    }
-
-    public static function returnpdf(){
-        $empleados = Empleado::get();
-        $pdf = Pdf::loadView('dashboard.empleados.pdf', compact('empleados'));
-        return $pdf;
-
     }
 }

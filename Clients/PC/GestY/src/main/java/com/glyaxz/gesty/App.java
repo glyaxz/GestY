@@ -581,7 +581,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Get App's GestyConnector instance
+     * Get App GestyConnector instance
      * @return gestyConnector
      */
     public GestyConnector getConnector(){
@@ -597,7 +597,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Check if logged employee has a valid company reference
+     * Check whether logged employee has a valid company reference
      */
     public void checkRef(){
         if(gc.hasRef(this.logged)){
@@ -650,7 +650,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Update Task table only with project's tasks
+     * Update Task table only with project tasks
      * @param project project
      */
     public void printTasksTable(Project project){
@@ -669,7 +669,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Update task table with all employee task 
+     * Update Task table with all employee's tasks
      */
     public void printTasksTable(){
         List<Project> projects = logged.getProjects();
@@ -723,7 +723,7 @@ public class App extends javax.swing.JFrame {
     }
 
     /**
-     * Function to update data while the application is open
+     * Function thats update data while the application is open
      */
     public void reloadData(){
         Thread t = new Thread( () -> {
@@ -742,7 +742,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Update all tasks from employee's projects
+     * Update all tasks from employee projects
      */
     public void updateTaskTable(){
         List<Project> projects = logged.getProjects();
@@ -769,7 +769,7 @@ public class App extends javax.swing.JFrame {
     }
     
     /**
-     * Update all projects from projects table
+     * Update all projects from Projects table
      */
     public void updateProjectsTable(){
         List<Project> projects = gc.getProjects(logged);

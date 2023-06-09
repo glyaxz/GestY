@@ -60,7 +60,7 @@ public class Project {
     }
     
     /**
-     * Get a task list from assigned in this project
+     * Get a list of Tasks assigned to this project
      * @param logged logged 
      * @return tasks
      */

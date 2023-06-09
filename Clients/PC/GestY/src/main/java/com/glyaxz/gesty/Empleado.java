@@ -7,7 +7,6 @@ package com.glyaxz.gesty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;
-import javax.swing.JDialog;
 
 /**
  *
@@ -71,7 +70,7 @@ public class Empleado extends User{
     }
     
     /**
-     * Get a specific project using project name as parameter
+     * Get an specific Project using Project name as a parameter
      * @param param projectName
      * @return project
      */
@@ -85,7 +84,7 @@ public class Empleado extends User{
     }
     
     /**
-     * Get a specific task using task name and project name
+     * Get an specific Task using Task name and Project name
      * @param param taskName
      * @param projectName projectName
      * @return 

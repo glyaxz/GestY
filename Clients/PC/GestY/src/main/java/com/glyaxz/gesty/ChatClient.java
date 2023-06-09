@@ -46,7 +46,7 @@ public class ChatClient {
     }
     
     /**
-     * Function for receive messages while chat is open
+     * Function thats receive messages while chat is open
      */
     public void receiveMessages() {
         Thread t = new Thread( () -> {
@@ -77,7 +77,7 @@ public class ChatClient {
     }
     
     /**
-     * Return if logged employee is connected to MQTT chat 
+     * Return whether logged employee is connected to MQTT chat 
      * @return connected
      */
     public boolean connected(){

@@ -113,7 +113,7 @@ public class MQTTConnector {
     }
 
     /**
-     * Public a message into a topic
+     * Publish a message into a topic
      * @param topic topic
      * @param message message
      */
@@ -144,7 +144,7 @@ public class MQTTConnector {
     }
     
     /**
-     * Return if user is connected to MQTT server
+     * Return whether user is connected to MQTT server
      * @return connected
      */
     public boolean connected(){

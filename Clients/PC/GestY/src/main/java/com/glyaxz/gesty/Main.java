@@ -26,7 +26,7 @@ public class Main extends javax.swing.JFrame {
     //App
     
     /**
-     * Creates new form Main
+     * Create a new form Main
      */
     public Main() {
         gc = new GestyConnector();

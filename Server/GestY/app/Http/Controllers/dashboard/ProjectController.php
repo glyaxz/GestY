@@ -30,7 +30,6 @@ class ProjectController extends Controller
     {
         $name = $request->input('project_name');
         $id = Random::generate(9, '0-9');
-        $ref = Random::generate(6);
 
         $proj = DB::table('projects')->updateOrInsert([
             'project_id' => $id,

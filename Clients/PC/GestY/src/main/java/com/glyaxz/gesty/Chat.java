@@ -23,7 +23,7 @@ public class Chat extends javax.swing.JFrame {
     ChatClient cc = null;
     MQTTConnector mqttClient;
     /**
-     * Creates new form Chat
+     * Create a new form Chat
      */
     public Chat(Empleado logged, String topic) {
         this.logged = logged;
@@ -213,7 +213,7 @@ public class Chat extends javax.swing.JFrame {
     
     // MQTT Client Functions 
     /**
-     * Get a chat client instance
+     * Get a ChatClient instance
      * @param logged logged
      * @param password password
      * @return chatClient
@@ -237,7 +237,7 @@ public class Chat extends javax.swing.JFrame {
     }
     
     /**
-     * Print into chat table a employee message
+     * Print into chat table an employee message
      * @param message message
      */
     public void printOwnMessageOnChat(String message){

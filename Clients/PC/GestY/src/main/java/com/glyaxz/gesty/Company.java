@@ -21,7 +21,7 @@ public class Company {
     private List<Project> projects;
 
     /**
-     * Create new company
+     * Create a new company
      * @param id id
      * @param name name
      * @param companyRef conpanyRef
@@ -55,7 +55,7 @@ public class Company {
         this.name = name;
     }
     /**
-     * Get company's name
+     * Get company name
      * @return name
      */
     public String getName(){
@@ -70,7 +70,7 @@ public class Company {
     }
     
     /**
-     * Get company's reference
+     * Get company reference
      * @return String companyRef
      */
     public String getCompanyRef(){
@@ -86,7 +86,7 @@ public class Company {
     }
     
     /**
-     * Get company's ID
+     * Get company ID
      * @return id
      */
     public int getId(){
@@ -102,7 +102,7 @@ public class Company {
     }
 
     /**
-     * Set a new project's list 
+     * Set a new projects list 
      * @param projects projects
      */
     public void setProjects(List<Project> projects){

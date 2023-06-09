@@ -35,14 +35,14 @@ import java.util.Map;
 public class GestyConnector {
     
     /**
-     * Token de conexion a la aplicacion
+     * Authentication Token
      */
     private final String token = "3sJak0orV9ysH0GBV2PZBDPqiIBroEZI";
     private String sessionId = "";
     Empleado logged = null;
 
     /**
-     * Function who verifies if employee logged is registered on server. If employee is valid, return a Empleado instance, otherwise a null Empleado
+     * Function thats verifies whether employee logged is registered on Server. If employee is valid, return an Empleado instance, otherwise a null Empleado
      * @param email email
      * @param password password
      * @return 
@@ -101,7 +101,7 @@ public class GestyConnector {
     }
 
     /**
-     * Function who verified if a company reference exists. If company reference exists, return company name, otherwise return null.
+     * Function thats verifies if a Company reference exists. If company reference exists, return company name, otherwise return null.
      * @param companyRef companyRef
      * @param sessionId sessionId
      * @return 
@@ -149,7 +149,7 @@ public class GestyConnector {
     }
 
     /**
-     * Verifies if employee has a company reference setted. If is setted, set it to employee instance and return true, otherwise return false;
+     * Verify whether employee has a Company reference setted. 
      * @param empleado empleado
      * @return hasref
      */
@@ -200,7 +200,7 @@ public class GestyConnector {
     }
 
     /**
-     * Set a company reference to a employee on GestY Server
+     * Set a Company reference to an employee on GestY Server
      * @param logged logged
      * @param ref companyRef
      * @return isValid
@@ -248,7 +248,7 @@ public class GestyConnector {
     }
 
     /**
-     * Returns the company the user belongs to
+     * Return the Company the user belongs to
      * @param logged logged
      * @return company
      */
@@ -295,7 +295,7 @@ public class GestyConnector {
     }
 
     /**
-     * Get a project list from the company the user belong to
+     * Get a Project List from the Company the user belongs to
      * @param logged logged
      * @return projects
      */
@@ -344,7 +344,7 @@ public class GestyConnector {
     }
 
     /**
-     * Get a task list assigned to user into a project
+     * Get a list of tasks assigned to a user into a project
      * @param project project
      * @param logged logged
      * @return tasks
@@ -388,15 +388,6 @@ public class GestyConnector {
                                 tasks.add(task);
                             }
                             return tasks;
-                                                        /*
-                            JsonObject obj = gson.fromJson(result, JsonObject.class);
-                            httpClient.close();
-                            response.close();
-                            List<Task> tasks = new ArrayList<Task>();
-                            System.out.println();
-                            tasks.add(new Task(obj, project));
-                            return tasks;
-                            */
                         }         
                     }else{
                         httpClient.close();

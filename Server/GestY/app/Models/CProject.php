@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Company;
-use App\Models\CList;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,7 +15,4 @@ class CProject extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function lists(){
-        return $this->hasMany(CList::class);
-    }
 }
