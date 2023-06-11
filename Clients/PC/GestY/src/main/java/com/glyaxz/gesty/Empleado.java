@@ -32,7 +32,6 @@ public class Empleado extends User{
     }
     
     public void setCompanyRef(String companyId){
-        GestyConnector gc = new GestyConnector();
         String company = gc.checkRef(companyId, super.getSessionId());
         Gson gson = new Gson();
         JsonObject obj = gson.fromJson(company, JsonObject.class);

@@ -15,8 +15,6 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   void init() {
     Get.put(CompanyProvider()); // ==> Inicializa el Provider
-    // Get.put(ProjectProvider()); // ==> Inicializa el Provider
-    // Get.put(TaskProvider()); // ==> Inicializa el Provider
     goToHome();
   }
 

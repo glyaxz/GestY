@@ -55,16 +55,23 @@ public class App extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         company = gc.getCompany(logged);
-        app.checkRef();
-        getData();
-        this.setTitle("GestY - " + logged.getCompany().getName());
-        this.setIconImage(new ImageIcon("logo.png").getImage());
-        ico.setIcon(new ImageIcon("logo.png"));
-        lblCompany.setText(logged.getCompany().getName());
-        jtProjects.addMouseListener(ml);
-        jtTasks.addMouseListener(mlt);
-        printTasksTable();
-        reloadData();
+        boolean hasref = app.checkRef();
+        if(hasref){
+            getData();
+            this.setTitle("GestY - " + logged.getCompany().getName());
+            this.setIconImage(new ImageIcon("logo.png").getImage());
+            ico.setIcon(new ImageIcon("logo.png"));
+            lblCompany.setText(logged.getCompany().getName());
+            jtProjects.addMouseListener(ml);
+            jtTasks.addMouseListener(mlt);
+            printTasksTable();
+            reloadData();
+        }else{
+            this.setTitle("GestY - Introduce una referencia");
+            this.setIconImage(new ImageIcon("logo.png").getImage());
+            ico.setIcon(new ImageIcon("logo.png"));
+        }
+        
     }
 
     MouseListener ml = new MouseListener() {
@@ -470,6 +477,7 @@ public class App extends javax.swing.JFrame {
 
     private void btnRefAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefAcceptActionPerformed
         if(gc.setUserRef(logged, txtRefUser.getText())){
+            logged.setCompany();
             reloadApp();
             loadApp();
         }
@@ -599,13 +607,15 @@ public class App extends javax.swing.JFrame {
     /**
      * Check whether logged employee has a valid company reference
      */
-    public void checkRef(){
+    public boolean checkRef(){
         if(gc.hasRef(this.logged)){
             app.jpApp.setVisible(true);
             app.jpRef.setVisible(false);
+            return true;
         }else{
             app.jpApp.setVisible(false);
             app.jpRef.setVisible(true);
+            return false;
         }
     }
     
@@ -615,19 +625,28 @@ public class App extends javax.swing.JFrame {
     public void reloadApp(){
         Thread wait = new Thread( () -> {
             try{
+                getData();
+                this.setTitle("GestY - " + logged.getCompany().getName());
+                this.setIconImage(new ImageIcon("logo.png").getImage());
+                ico.setIcon(new ImageIcon("logo.png"));
+                lblCompany.setText(logged.getCompany().getName());
+                jtProjects.addMouseListener(ml);
+                jtTasks.addMouseListener(mlt);
+                printTasksTable();
+                reloadData();
                 Thread.sleep(1000);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
         });
         wait.run();
-        System.out.println("DEBUG: " + "WIP -> FUNCTION TO UPDATE APP WHEN UPDATE COMPANY_REF");
     }
     
     /**
      * Load app
      */
     public void loadApp(){
+        
         jpRef.setVisible(false);
         jpApp.setVisible(true);
     }
